@@ -1,0 +1,6 @@
+{
+    "Blog": true,
+    "Store": true,
+    "Product": true,
+    "Order": true
+}

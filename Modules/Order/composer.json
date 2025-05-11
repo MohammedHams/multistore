@@ -1,0 +1,24 @@
+{
+    "name": "multistore/order",
+    "description": "Order management module for multistore application",
+    "type": "laravel-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MultiStore Team",
+            "email": "info@multistore.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Order\\": ""
+        }
+    },
+    "require": {}
+}
