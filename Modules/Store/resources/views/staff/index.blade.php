@@ -39,17 +39,59 @@ $pageTitle = 'Store Staff: ' . $store->name;
                             <td>
                                 @php
                                     $userId = $staffMember->getUserData()['id'];
-                                    $staffPermissions = \App\Models\StoreStaff::where('store_id', $store->id)
-                                        ->where('user_id', $userId)
-                                        ->first()
-                                        ->permissions ?? [];
+                                    $user = \App\Models\User::find($userId);
+                                    $storeId = $store->id;
+                                    
+                                    // Define permission groups and their labels
+                                    $permissionGroups = [
+                                        'view' => __('View'),
+                                        'create' => __('Create'),
+                                        'edit' => __('Edit'),
+                                        'delete' => __('Delete')
+                                    ];
+                                    
+                                    // Check which permission groups the user has
+                                    $userPermissions = [];
+                                    
+                                    // View permissions
+                                    if ($user->hasAllPermissions([
+                                        'view-store-' . $storeId,
+                                        'view-products-store-' . $storeId,
+                                        'view-orders-store-' . $storeId,
+                                    ])) {
+                                        $userPermissions[] = 'view';
+                                    }
+                                    
+                                    // Create permissions
+                                    if ($user->hasAllPermissions([
+                                        'create-products-store-' . $storeId,
+                                        'create-orders-store-' . $storeId,
+                                    ])) {
+                                        $userPermissions[] = 'create';
+                                    }
+                                    
+                                    // Edit permissions
+                                    if ($user->hasAllPermissions([
+                                        'edit-store-' . $storeId,
+                                        'edit-products-store-' . $storeId,
+                                        'edit-orders-store-' . $storeId,
+                                        'update-order-status-store-' . $storeId,
+                                        'update-payment-status-store-' . $storeId,
+                                    ])) {
+                                        $userPermissions[] = 'edit';
+                                    }
+                                    
+                                    // Delete permissions
+                                    if ($user->hasPermissionTo('delete-products-store-' . $storeId)) {
+                                        $userPermissions[] = 'delete';
+                                    }
                                 @endphp
                                 
-                                @foreach($staffPermissions as $permission)
-                                    <span class="badge badge-primary me-1">{{ __($permission) }}</span>
+                                @foreach($userPermissions as $permission)
+                                    <span class="badge badge-primary me-1">{{ $permissionGroups[$permission] }}</span>
                                 @endforeach
                                 
-                                @if(empty($staffPermissions))
+                                @if(empty($userPermissions))
                                     <span class="text-muted">{{ __('No permissions') }}</span>
                                 @endif
                             </td>
