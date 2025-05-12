@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('store_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('order_number')->unique();
             $table->decimal('total_amount', 10, 2)->default(0);
             $table->string('status')->default('pending');
@@ -24,6 +24,15 @@ return new class extends Migration
             $table->string('payment_status')->default('pending');
             $table->text('notes')->nullable();
             $table->timestamps();
+        });
+        
+        Schema::table('orders', function (Blueprint $table) {
+            if (Schema::hasTable('stores')) {
+                $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
+            }
+            if (Schema::hasTable('users')) {
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            }
         });
     }
 

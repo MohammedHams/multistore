@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade');
+            $table->unsignedBigInteger('store_id');
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
@@ -22,6 +22,12 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
+        });
+        
+        Schema::table('products', function (Blueprint $table) {
+            if (Schema::hasTable('stores')) {
+                $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
+            }
         });
     }
 
