@@ -11,13 +11,13 @@
         <!--begin::Menu-->
         <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
             <li class="menu-item">
-                <a href="#" target="_blank" class="menu-link px-2">About</a>
+                <a href="#" target="_blank" class="menu-link px-2">حول</a>
             </li>
             <li class="menu-item">
-                <a href="#" target="_blank" class="menu-link px-2">Support</a>
+                <a href="#" target="_blank" class="menu-link px-2">الدعم</a>
             </li>
             <li class="menu-item">
-                <a href="#" target="_blank" class="menu-link px-2">Documentation</a>
+                <a href="#" target="_blank" class="menu-link px-2">التوثيق</a>
             </li>
         </ul>
         <!--end::Menu-->

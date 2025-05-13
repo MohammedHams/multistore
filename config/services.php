@@ -34,5 +34,12 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    
+    'whatsapp' => [
+        'api_url' => env('WHATSAPP_API_URL', 'https://graph.facebook.com/v17.0/YOUR_PHONE_NUMBER_ID/messages'),
+        'api_token' => env('WHATSAPP_API_TOKEN', ''),
+        'default_phone' => env('WHATSAPP_DEFAULT_PHONE', '+1234567890'),
+        'enabled' => env('WHATSAPP_ENABLED', false),
+    ],
 
 ];

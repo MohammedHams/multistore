@@ -82,13 +82,14 @@
                                             <tr class="item-row">
                                                 <td>
                                                     <select class="form-select product-select" name="items[0][product_id]" required>
-                                                        <option value="">Select Product</option>
+                                                        <option value="">اختر المنتج</option>
                                                         @foreach($products as $product)
                                                             <option value="{{ $product->id }}" data-price="{{ $product->price }}" data-stock="{{ $product->stock }}">
-                                                                {{ $product->name }} ({{ $product->sku }}) - ${{ number_format($product->price, 2) }} - Stock: {{ $product->stock }}
+                                                                {{ $product->name }} - ${{ number_format($product->price, 2) }} ({{ $product->stock }} في المخزون)
                                                             </option>
                                                         @endforeach
                                                     </select>
+                                                    <input type="hidden" name="items[0][price]" class="item-price-input" value="0">
                                                 </td>
                                                 <td class="item-price">$0.00</td>
                                                 <td>
@@ -96,7 +97,7 @@
                                                 </td>
                                                 <td class="item-subtotal">$0.00</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-danger btn-sm remove-item-btn">Remove</button>
+                                                    <button type="button" class="btn btn-danger btn-sm remove-item-btn">حذف</button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -178,13 +179,14 @@
     <tr class="item-row">
         <td>
             <select class="form-select product-select" name="items[{index}][product_id]" required>
-                <option value="">Select Product</option>
+                <option value="">اختر المنتج</option>
                 @foreach($products as $product)
                     <option value="{{ $product->id }}" data-price="{{ $product->price }}" data-stock="{{ $product->stock }}">
-                        {{ $product->name }} ({{ $product->sku }}) - ${{ number_format($product->price, 2) }} - Stock: {{ $product->stock }}
+                        {{ $product->name }} - ${{ number_format($product->price, 2) }} ({{ $product->stock }} في المخزون)
                     </option>
                 @endforeach
             </select>
+            <input type="hidden" name="items[{index}][price]" class="item-price-input" value="0">
         </td>
         <td class="item-price">$0.00</td>
         <td>
@@ -192,7 +194,7 @@
         </td>
         <td class="item-subtotal">$0.00</td>
         <td>
-            <button type="button" class="btn btn-danger btn-sm remove-item-btn">Remove</button>
+            <button type="button" class="btn btn-danger btn-sm remove-item-btn">حذف</button>
         </td>
     </tr>
 </template>
@@ -249,7 +251,7 @@
                     const stock = parseInt(option.dataset.stock);
                     if (parseInt(this.value) > stock) {
                         this.value = stock;
-                        alert('Quantity cannot exceed available stock.');
+                        alert('لا يمكن أن تتجاوز الكمية المخزون المتاح.');
                     }
                 }
                 
@@ -270,6 +272,7 @@
         function updateRowPrices(row) {
             const productSelect = row.querySelector('.product-select');
             const quantityInput = row.querySelector('.quantity-input');
+            const priceInput = row.querySelector('.item-price-input');
             const priceCell = row.querySelector('.item-price');
             const subtotalCell = row.querySelector('.item-subtotal');
             
@@ -279,9 +282,13 @@
                 const price = parseFloat(option.dataset.price);
                 const quantity = parseInt(quantityInput.value);
                 
+                // Update the hidden price input
+                priceInput.value = price;
+                
                 priceCell.textContent = '$' + price.toFixed(2);
                 subtotalCell.textContent = '$' + (price * quantity).toFixed(2);
             } else {
+                priceInput.value = 0;
                 priceCell.textContent = '$0.00';
                 subtotalCell.textContent = '$0.00';
             }
@@ -313,7 +320,7 @@
             
             if (itemRows.length === 0) {
                 e.preventDefault();
-                alert('Please add at least one item to the order.');
+                alert('الرجاء إضافة عنصر واحد على الأقل إلى الطلب.');
                 return false;
             }
             
@@ -328,7 +335,7 @@
             
             if (hasInvalidItem) {
                 e.preventDefault();
-                alert('Please select a product for all order items.');
+                alert('الرجاء اختيار منتج لجميع عناصر الطلب.');
                 return false;
             }
             

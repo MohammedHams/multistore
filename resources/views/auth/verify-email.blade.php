@@ -1,8 +1,8 @@
 @extends('layouts.auth')
 
-@section('title', 'Verify Email - Multistore')
-@section('auth_title', 'Email Verification')
-@section('auth_description', 'Verify your email address to continue')
+@section('title', 'تحقق من البريد الإلكتروني - Multistore')
+@section('auth_title', 'التحقق من البريد الإلكتروني')
+@section('auth_description', 'تحقق من عنوان بريدك الإلكتروني للمتابعة')
 
 @section('content')
 <!--begin::Form-->
@@ -10,11 +10,11 @@
     <!--begin::Heading-->
     <div class="text-center mb-10">
         <!--begin::Title-->
-        <h1 class="text-dark mb-3">Verify Your Email Address</h1>
+        <h1 class="text-dark mb-3">تحقق من عنوان بريدك الإلكتروني</h1>
         <!--end::Title-->
         <!--begin::Link-->
         <div class="text-gray-400 fw-bold fs-4">
-            Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.
+            شكراً للتسجيل! قبل البدء، هل يمكنك التحقق من عنوان بريدك الإلكتروني بالنقر على الرابط الذي أرسلناه لتونا إليك؟ إذا لم تستلم البريد الإلكتروني، فسنرسل لك رسالة أخرى بكل سرور.
         </div>
         <!--end::Link-->
     </div>
@@ -35,7 +35,7 @@
         <!--begin::Wrapper-->
         <div class="d-flex flex-column">
             <!--begin::Content-->
-            <span>A new verification link has been sent to the email address you provided during registration.</span>
+            <span>تم إرسال رابط تحقق جديد إلى عنوان البريد الإلكتروني الذي قدمته أثناء التسجيل.</span>
             <!--end::Content-->
         </div>
         <!--end::Wrapper-->
@@ -48,15 +48,15 @@
         <form method="POST" action="{{ route('verification.send') }}">
             @csrf
             <button type="submit" id="kt_resend_verification_submit" class="btn btn-lg btn-primary fw-bolder me-4">
-                <span class="indicator-label">Resend Verification Email</span>
-                <span class="indicator-progress">Please wait...
+                <span class="indicator-label">إعادة إرسال بريد التحقق</span>
+                <span class="indicator-progress">يرجى الانتظار...
                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
             </button>
         </form>
         
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="btn btn-lg btn-light-primary fw-bolder">Log Out</button>
+            <button type="submit" class="btn btn-lg btn-light-primary fw-bolder">تسجيل الخروج</button>
         </form>
     </div>
     <!--end::Actions-->

@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Order\Http\Controllers\OrderController;
 
 // Define the controller once to avoid duplicate class loading
-$orderController = 'OrderController';
+$orderController = OrderController::class;
 
 // Routes with original names but protected by admin guard
 Route::middleware(['auth', 'verified'])->group(function () use ($orderController) {

@@ -1,8 +1,8 @@
 @extends('layouts.auth')
 
-@section('title', 'Reset Password - Multistore')
-@section('auth_title', 'Reset Your Password')
-@section('auth_description', 'Create a new secure password for your account')
+@section('title', 'إعادة تعيين كلمة المرور - Multistore')
+@section('auth_title', 'إعادة تعيين كلمة المرور')
+@section('auth_description', 'قم بإنشاء كلمة مرور جديدة وآمنة لحسابك')
 
 @section('content')
 <!--begin::Form-->
@@ -18,10 +18,10 @@
     <!--begin::Heading-->
     <div class="text-center mb-10">
         <!--begin::Title-->
-        <h1 class="text-dark mb-3">Reset Password</h1>
+        <h1 class="text-dark mb-3">إعادة تعيين كلمة المرور</h1>
         <!--end::Title-->
         <!--begin::Link-->
-        <div class="text-gray-400 fw-bold fs-4">Create a new secure password for your account.</div>
+        <div class="text-gray-400 fw-bold fs-4">قم بإنشاء كلمة مرور جديدة وآمنة لحسابك.</div>
         <!--end::Link-->
     </div>
     <!--begin::Heading-->
@@ -58,7 +58,7 @@
         <!--begin::Wrapper-->
         <div class="mb-1">
             <!--begin::Label-->
-            <label class="form-label fw-bolder text-dark fs-6">Password</label>
+            <label class="form-label fw-bolder text-dark fs-6">كلمة المرور</label>
             <!--end::Label-->
             <!--begin::Input wrapper-->
             <div class="position-relative mb-3">
@@ -80,14 +80,14 @@
         </div>
         <!--end::Wrapper-->
         <!--begin::Hint-->
-        <div class="text-muted">Use 8 or more characters with a mix of letters, numbers &amp; symbols.</div>
+        <div class="text-muted">استخدم 8 أحرف أو أكثر مع مزيج من الحروف والأرقام والرموز.</div>
         <!--end::Hint-->
     </div>
     <!--end::Input group-->
 
     <!--begin::Input group-->
     <div class="fv-row mb-10">
-        <label class="form-label fw-bolder text-dark fs-6">Confirm Password</label>
+        <label class="form-label fw-bolder text-dark fs-6">تأكيد كلمة المرور</label>
         <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="password_confirmation" autocomplete="off" />
     </div>
     <!--end::Input group-->
@@ -95,8 +95,8 @@
     <!--begin::Actions-->
     <div class="text-center">
         <button type="submit" id="kt_new_password_submit" class="btn btn-lg btn-primary fw-bolder">
-            <span class="indicator-label">Reset Password</span>
-            <span class="indicator-progress">Please wait...
+            <span class="indicator-label">تأكيد</span>
+            <span class="indicator-progress">يرجى الانتظار...
             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
         </button>
     </div>
@@ -125,10 +125,10 @@
                         'password': {
                             validators: {
                                 notEmpty: {
-                                    message: 'The password is required'
+                                    message: 'كلمة المرور مطلوبة'
                                 },
                                 callback: {
-                                    message: 'Please enter a valid password',
+                                    message: 'الرجاء إدخال كلمة مرور صالحة',
                                     callback: function(input) {
                                         if (input.value.length > 0) {
                                             return validatePassword();
@@ -140,13 +140,13 @@
                         'password_confirmation': {
                             validators: {
                                 notEmpty: {
-                                    message: 'The password confirmation is required'
+                                    message: 'تأكيد كلمة المرور مطلوب'
                                 },
                                 identical: {
                                     compare: function() {
                                         return form.querySelector('[name="password"]').value;
                                     },
-                                    message: 'The passwords are not the same'
+                                    message: 'كلمات المرور غير متطابقة'
                                 }
                             }
                         }
@@ -185,10 +185,10 @@
                     } else {
                         // Show error popup
                         Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            text: "عذراً، يبدو أنه تم اكتشاف بعض الأخطاء، يرجى المحاولة مرة أخرى.",
                             icon: "error",
                             buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
+                            confirmButtonText: "حسناً، فهمت!",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }

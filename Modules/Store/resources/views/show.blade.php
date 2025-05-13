@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
 @php
-$title = __('store.store_details') . ' - ' . $storeModel->name . ' - ' . config('app.name');
-$pageTitle = __('store.store_details') . ': ' . $storeModel->name;
+$title = 'تفاصيل المتجر' . ' - ' . $storeModel->name . ' - ' . config('app.name');
+$pageTitle = 'تفاصيل المتجر' . ': ' . $storeModel->name;
 @endphp
 
 @section('content')
     <div class="card mb-5">
         <div class="card-header">
-            <h3 class="card-title">{{ __('store.store_details') }}</h3>
+            <h3 class="card-title">تفاصيل المتجر</h3>
             <div class="card-toolbar">
                 <a href="{{ route('store.index') }}" class="btn btn-sm btn-secondary me-2">
-                    <i class="fas fa-arrow-left"></i> {{ __('store.back_to_stores') }}
+                    <i class="fas fa-arrow-left"></i> العودة إلى المتاجر
                 </a>
                 <a href="{{ route('store.edit', $storeModel->id) }}" class="btn btn-sm btn-primary">
-                    <i class="fas fa-edit"></i> {{ __('store.edit_store') }}
+                    <i class="fas fa-edit"></i> تعديل المتجر
                 </a>
             </div>
         </div>
@@ -32,41 +32,41 @@ $pageTitle = __('store.store_details') . ': ' . $storeModel->name;
                 <div class="col-md-8">
                     <table class="table table-borderless">
                         <tr>
-                            <th style="width: 150px;">{{ __('store.id') }}:</th>
+                            <th style="width: 150px;">الرقم التعريفي:</th>
                             <td>{{ $storeModel->id }}</td>
                         </tr>
                         <tr>
-                            <th>{{ __('store.name') }}:</th>
+                            <th>الاسم:</th>
                             <td>{{ $storeModel->name }}</td>
                         </tr>
                         <tr>
-                            <th>{{ __('store.domain') }}:</th>
+                            <th>النطاق:</th>
                             <td>{{ $storeModel->domain }}</td>
                         </tr>
                         <tr>
-                            <th>{{ __('store.email') }}:</th>
+                            <th>البريد الإلكتروني:</th>
                             <td>{{ $storeModel->email }}</td>
                         </tr>
                         <tr>
-                            <th>{{ __('store.phone') }}:</th>
+                            <th>رقم الهاتف:</th>
                             <td>{{ $storeModel->phone }}</td>
                         </tr>
                         <tr>
-                            <th>{{ __('store.status') }}:</th>
+                            <th>الحالة:</th>
                             <td>
                                 @if($storeModel->is_active)
-                                    <span class="badge badge-success">{{ __('store.active') }}</span>
+                                    <span class="badge badge-success">نشط</span>
                                 @else
-                                    <span class="badge badge-danger">{{ __('store.inactive') }}</span>
+                                    <span class="badge badge-danger">غير نشط</span>
                                 @endif
                             </td>
                         </tr>
                         <tr>
-                            <th>{{ __('store.created_at') }}:</th>
+                            <th>تاريخ الإنشاء:</th>
                             <td>{{ $storeModel->created_at->format('Y-m-d H:i:s') }}</td>
                         </tr>
                         <tr>
-                            <th>{{ __('store.updated_at') }}:</th>
+                            <th>تاريخ التحديث:</th>
                             <td>{{ $storeModel->updated_at->format('Y-m-d H:i:s') }}</td>
                         </tr>
                     </table>
@@ -78,10 +78,10 @@ $pageTitle = __('store.store_details') . ': ' . $storeModel->name;
     <!-- Store Owners Section -->
     <div class="card mb-5">
         <div class="card-header">
-            <h3 class="card-title">{{ __('store.store_owners') }}</h3>
+            <h3 class="card-title">مالكو المتجر</h3>
             <div class="card-toolbar">
                 <a href="{{ route('store.owners.create', $storeModel->id) }}" class="btn btn-sm btn-primary">
-                    <i class="fas fa-plus"></i> {{ __('store.add_owner') }}
+                    <i class="fas fa-plus"></i> إضافة مالك
                 </a>
             </div>
         </div>
@@ -90,10 +90,10 @@ $pageTitle = __('store.store_details') . ': ' . $storeModel->name;
                 <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                     <thead>
                         <tr class="fw-bold text-muted">
-                            <th>{{ __('store.id') }}</th>
-                            <th>{{ __('store.name') }}</th>
-                            <th>{{ __('store.email') }}</th>
-                            <th>{{ __('store.actions') }}</th>
+                            <th>الرقم التعريفي</th>
+                            <th>الاسم</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -118,7 +118,7 @@ $pageTitle = __('store.store_details') . ': ' . $storeModel->name;
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center">{{ __('store.no_owners_found') }}</td>
+                            <td colspan="4" class="text-center">لم يتم العثور على مالكين</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -130,10 +130,10 @@ $pageTitle = __('store.store_details') . ': ' . $storeModel->name;
     <!-- Store Staff Section -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ __('store.store_staff') }}</h3>
+            <h3 class="card-title">موظفو المتجر</h3>
             <div class="card-toolbar">
                 <a href="{{ route('store.staff.create', $storeModel->id) }}" class="btn btn-sm btn-primary">
-                    <i class="fas fa-plus"></i> {{ __('store.add_staff') }}
+                    <i class="fas fa-plus"></i> إضافة موظف
                 </a>
             </div>
         </div>
@@ -142,11 +142,11 @@ $pageTitle = __('store.store_details') . ': ' . $storeModel->name;
                 <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                     <thead>
                         <tr class="fw-bold text-muted">
-                            <th>{{ __('store.id') }}</th>
-                            <th>{{ __('store.name') }}</th>
-                            <th>{{ __('store.email') }}</th>
-                            <th>{{ __('store.permissions') }}</th>
-                            <th>{{ __('store.actions') }}</th>
+                            <th>الرقم التعريفي</th>
+                            <th>الاسم</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>الصلاحيات</th>
+                            <th>الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -165,11 +165,11 @@ $pageTitle = __('store.store_details') . ': ' . $storeModel->name;
                                 @endphp
                                 
                                 @foreach($staffPermissions as $permission)
-                                    <span class="badge badge-primary me-1">{{ __($permission) }}</span>
+                                    <span class="badge badge-primary me-1">{{ $permission }}</span>
                                 @endforeach
                                 
                                 @if(empty($staffPermissions))
-                                    <span class="text-muted">{{ __('store.no_permissions') }}</span>
+                                    <span class="text-muted">لا توجد صلاحيات</span>
                                 @endif
                             </td>
                             <td>
@@ -177,13 +177,13 @@ $pageTitle = __('store.store_details') . ': ' . $storeModel->name;
                                     $userId = $staffMember->getUserData()['id'];
                                     $user = \App\Models\User::find($userId);
                                 @endphp
-                                <a href="{{ route('store.staff.edit', [$storeModel->id, $user]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="{{ __('store.edit_staff_permissions') }}">
+                                <a href="{{ route('store.staff.edit', [$storeModel->id, $user]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="تعديل صلاحيات الموظف">
                                     <i class="fas fa-key"></i>
                                 </a>
-                                <form action="{{ route('store.staff.destroy', [$storeModel->id, $user]) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ __('store.are_you_sure_remove_staff') }}');">
+                                <form action="{{ route('store.staff.destroy', [$storeModel->id, $user]) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد من إزالة هذا الموظف؟');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" data-bs-toggle="tooltip" title="{{ __('store.remove_staff') }}">
+                                    <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" data-bs-toggle="tooltip" title="إزالة الموظف">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
@@ -191,7 +191,7 @@ $pageTitle = __('store.store_details') . ': ' . $storeModel->name;
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="text-center">{{ __('store.no_staff_found') }}</td>
+                            <td colspan="5" class="text-center">لم يتم العثور على موظفين</td>
                         </tr>
                         @endforelse
                     </tbody>

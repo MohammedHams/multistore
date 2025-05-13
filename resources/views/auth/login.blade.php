@@ -1,8 +1,8 @@
 @extends('layouts.auth')
 
-@section('title', 'Login - Multistore')
-@section('auth_title', 'Welcome to Multistore')
-@section('auth_description', 'Enter your credentials to access your account')
+@section('title', 'تسجيل الدخول - Multistore')
+@section('auth_title', 'مرحباً بك في Multistore')
+@section('auth_description', 'أدخل بيانات الاعتماد الخاصة بك للوصول إلى حسابك')
 
 @section('content')
 <!--begin::Form-->
@@ -11,11 +11,11 @@
     <!--begin::Heading-->
     <div class="text-center mb-10">
         <!--begin::Title-->
-        <h1 class="text-dark mb-3">Sign In to Multistore</h1>
+        <h1 class="text-dark mb-3">تسجيل الدخول إلى Multistore</h1>
         <!--end::Title-->
         <!--begin::Link-->
-        <div class="text-gray-400 fw-bold fs-4">New Here?
-        <a href="{{ route('register') }}" class="link-primary fw-bolder">Create an Account</a></div>
+        <div class="text-gray-400 fw-bold fs-4">جديد هنا؟
+        <a href="{{ route('register') }}" class="link-primary fw-bolder">إنشاء حساب</a></div>
         <!--end::Link-->
     </div>
     <!--begin::Heading-->
@@ -69,7 +69,7 @@
     <!--begin::Input group-->
     <div class="fv-row mb-10">
         <!--begin::Label-->
-        <label class="form-label fs-6 fw-bolder text-dark">Email</label>
+        <label class="form-label fs-6 fw-bolder text-dark">البريد الإلكتروني</label>
         <!--end::Label-->
         <!--begin::Input-->
         <input class="form-control form-control-lg form-control-solid @error('email') is-invalid @enderror" type="text" name="email" value="{{ old('email') }}" autocomplete="off" />
@@ -81,10 +81,10 @@
         <!--begin::Wrapper-->
         <div class="d-flex flex-stack mb-2">
             <!--begin::Label-->
-            <label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
+            <label class="form-label fw-bolder text-dark fs-6 mb-0">كلمة المرور</label>
             <!--end::Label-->
             <!--begin::Link-->
-            <a href="{{ route('password.request') }}" class="link-primary fs-6 fw-bolder">Forgot Password ?</a>
+            <a href="{{ route('password.request') }}" class="link-primary fs-6 fw-bolder">نسيت كلمة المرور؟</a>
             <!--end::Link-->
         </div>
         <!--end::Wrapper-->
@@ -97,7 +97,7 @@
     <div class="fv-row mb-10">
         <label class="form-check form-check-custom form-check-solid">
             <input class="form-check-input" type="checkbox" name="remember" />
-            <span class="form-check-label fw-bold text-gray-700">Remember me</span>
+            <span class="form-check-label fw-bold text-gray-700">تذكرني</span>
         </label>
     </div>
     <!--end::Input group-->
@@ -105,8 +105,8 @@
     <div class="text-center">
         <!--begin::Submit button-->
         <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-            <span class="indicator-label">Continue</span>
-            <span class="indicator-progress">Please wait...
+            <span class="indicator-label">متابعة</span>
+            <span class="indicator-progress">يرجى الانتظار...
             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
         </button>
         <!--end::Submit button-->
@@ -135,17 +135,17 @@
                         'email': {
                             validators: {
                                 notEmpty: {
-                                    message: 'Email address is required'
+                                    message: 'البريد الإلكتروني مطلوب'
                                 },
                                 emailAddress: {
-                                    message: 'The value is not a valid email address'
+                                    message: 'القيمة ليست عنوان بريد إلكتروني صالح'
                                 }
                             }
                         },
                         'password': {
                             validators: {
                                 notEmpty: {
-                                    message: 'The password is required'
+                                    message: 'كلمة المرور مطلوبة'
                                 }
                             }
                         } 
@@ -180,10 +180,10 @@
                     } else {
                         // Show error popup
                         Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            text: "عذراً، يبدو أنه تم اكتشاف بعض الأخطاء، يرجى المحاولة مرة أخرى.",
                             icon: "error",
                             buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
+                            confirmButtonText: "حسناً، فهمت!",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }

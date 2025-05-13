@@ -20,6 +20,17 @@ use App\Http\Controllers\LanguageController;
 // Language Switcher
 Route::get('language/{locale}', [LanguageController::class, 'switchLang'])->name('language.switch');
 
+// Two-factor authentication email OTP routes
+Route::get('two-factor/send-code', [\App\Http\Controllers\Auth\TwoFactorAuthController::class, 'sendCode'])->name('two-factor.send-code');
+Route::post('two-factor/verify', [\App\Http\Controllers\Auth\TwoFactorAuthController::class, 'verify'])->name('two-factor.verify');
+Route::get('two-factor/login', function() {
+    return redirect()->route('two-factor.challenge');
+})->middleware(['guest'])->name('two-factor.login.get');
+Route::post('two-factor/login', [\App\Http\Controllers\Auth\TwoFactorAuthController::class, 'verify'])->name('two-factor.login');
+Route::get('two-factor-challenge', function() {
+    return view('auth.two-factor-challenge');
+})->middleware(['guest'])->name('two-factor.challenge');
+
 // Authentication routes (handled by Fortify)
 // Laravel Fortify automatically registers these routes:
 // - /login (GET & POST)
@@ -36,7 +47,7 @@ Route::get('language/{locale}', [LanguageController::class, 'switchLang'])->name
 // - /user/two-factor-recovery-codes (POST)
 
 // Protected routes
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'App\Http\Middleware\RequireTwoFactorAuth'])->group(function () {
     // User profile (accessible to all authenticated users)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -48,7 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // Admin protected routes
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'App\Http\Middleware\RequireTwoFactorAuth'])->group(function () {
     // Dashboard (only accessible to admins)
     Route::get('/', function () {
         return view('dashboard');

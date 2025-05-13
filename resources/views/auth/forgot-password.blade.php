@@ -1,8 +1,8 @@
 @extends('layouts.auth')
 
-@section('title', 'Forgot Password - Multistore')
-@section('auth_title', 'Forgot Your Password?')
-@section('auth_description', 'Enter your email to reset your password')
+@section('title', 'نسيت كلمة المرور - Multistore')
+@section('auth_title', 'نسيت كلمة المرور؟')
+@section('auth_description', 'أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور')
 
 @section('content')
 <!--begin::Form-->
@@ -11,10 +11,10 @@
     <!--begin::Heading-->
     <div class="text-center mb-10">
         <!--begin::Title-->
-        <h1 class="text-dark mb-3">Forgot Password ?</h1>
+        <h1 class="text-dark mb-3">نسيت كلمة المرور؟</h1>
         <!--end::Title-->
         <!--begin::Link-->
-        <div class="text-gray-400 fw-bold fs-4">Enter your email to reset your password.</div>
+        <div class="text-gray-400 fw-bold fs-4">أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور.</div>
         <!--end::Link-->
     </div>
     <!--begin::Heading-->
@@ -67,7 +67,7 @@
 
     <!--begin::Input group-->
     <div class="fv-row mb-10">
-        <label class="form-label fw-bolder text-gray-900 fs-6">Email</label>
+        <label class="form-label fw-bolder text-gray-900 fs-6">البريد الإلكتروني</label>
         <input class="form-control form-control-solid @error('email') is-invalid @enderror" type="email" placeholder="" name="email" value="{{ old('email') }}" autocomplete="off" />
     </div>
     <!--end::Input group-->
@@ -75,11 +75,11 @@
     <!--begin::Actions-->
     <div class="d-flex flex-wrap justify-content-center pb-lg-0">
         <button type="submit" id="kt_password_reset_submit" class="btn btn-lg btn-primary fw-bolder me-4">
-            <span class="indicator-label">Submit</span>
-            <span class="indicator-progress">Please wait...
+            <span class="indicator-label">إرسال</span>
+            <span class="indicator-progress">يرجى الانتظار...
             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
         </button>
-        <a href="{{ route('login') }}" class="btn btn-lg btn-light-primary fw-bolder">Cancel</a>
+        <a href="{{ route('login') }}" class="btn btn-lg btn-light-primary fw-bolder">إلغاء</a>
     </div>
     <!--end::Actions-->
 </form>
@@ -105,10 +105,10 @@
                         'email': {
                             validators: {
                                 notEmpty: {
-                                    message: 'Email address is required'
+                                    message: 'البريد الإلكتروني مطلوب'
                                 },
                                 emailAddress: {
-                                    message: 'The value is not a valid email address'
+                                    message: 'القيمة ليست عنوان بريد إلكتروني صالح'
                                 }
                             }
                         } 
@@ -143,10 +143,10 @@
                     } else {
                         // Show error popup
                         Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            text: "عذراً، يبدو أنه تم اكتشاف بعض الأخطاء، يرجى المحاولة مرة أخرى.",
                             icon: "error",
                             buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
+                            confirmButtonText: "حسناً، فهمت!",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }

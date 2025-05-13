@@ -3,14 +3,14 @@
 <!--begin::Head-->
 <head>
     <base href="">
-    <title>@yield('title', 'Authentication - Multistore')</title>
-    <meta name="description" content="@yield('meta_description', 'Multistore authentication')" />
-    <meta name="keywords" content="@yield('meta_keywords', 'login, register, authentication')" />
+    <title>@yield('title', 'المصادقة - Multistore')</title>
+    <meta name="description" content="@yield('meta_description', 'المصادقة لمتجر متعدد')" />
+    <meta name="keywords" content="@yield('meta_keywords', 'تسجيل الدخول، التسجيل، المصادقة')" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="@yield('og_title', 'Authentication - Multistore')" />
+    <meta property="og:title" content="@yield('og_title', 'المصادقة - Multistore')" />
     <meta property="og:url" content="@yield('og_url', url('/'))" />
     <meta property="og:site_name" content="Multistore" />
     <link rel="canonical" href="@yield('canonical', url('/'))" />
@@ -47,11 +47,11 @@
                         </a>
                         <!--end::Logo-->
                         <!--begin::Title-->
-                        <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">@yield('auth_title', 'Welcome to Multistore')</h1>
+                        <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">@yield('auth_title', 'مرحباً بك في Multistore')</h1>
                         <!--end::Title-->
                         <!--begin::Description-->
-                        <p class="fw-bold fs-2" style="color: #986923;">@yield('auth_description', 'Discover Amazing Features
-                        <br />with Metronic Admin')</p>
+                        <p class="fw-bold fs-2" style="color: #986923;">@yield('auth_description', 'اكتشف الميزات المذهلة
+                        <br />مع لوحة التحكم')</p>
                         <!--end::Description-->
                     </div>
                     <!--end::Content-->
@@ -77,9 +77,9 @@
                 <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
                     <!--begin::Links-->
                     <div class="d-flex flex-center fw-bold fs-6">
-                        <a href="#" class="text-muted text-hover-primary px-2" target="_blank">About</a>
-                        <a href="#" class="text-muted text-hover-primary px-2" target="_blank">Support</a>
-                        <a href="#" class="text-muted text-hover-primary px-2" target="_blank">Terms</a>
+                        <a href="#" class="text-muted text-hover-primary px-2" target="_blank">حول</a>
+                        <a href="#" class="text-muted text-hover-primary px-2" target="_blank">الدعم</a>
+                        <a href="#" class="text-muted text-hover-primary px-2" target="_blank">الشروط</a>
                     </div>
                     <!--end::Links-->
                 </div>

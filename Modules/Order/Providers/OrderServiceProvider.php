@@ -38,6 +38,7 @@ class OrderServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
         
         // Register repository bindings
         $this->app->bind(
@@ -49,6 +50,10 @@ class OrderServiceProvider extends ServiceProvider
             OrderItemRepositoryInterface::class,
             OrderItemRepository::class
         );
+        
+        // Register services
+        $this->app->singleton(\Modules\Order\Services\OrderPdfGenerator::class);
+        $this->app->singleton(\Modules\Order\Services\WhatsAppService::class);
     }
 
     /**

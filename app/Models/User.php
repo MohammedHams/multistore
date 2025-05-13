@@ -4,16 +4,19 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\StoreOwner;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -87,5 +90,15 @@ class User extends Authenticatable
         return $storeEmployee->pivot->role === $role ||
                $storeEmployee->pivot->role === StoreEmployee::ROLE_ADMIN ||
                $storeEmployee->pivot->role === StoreEmployee::ROLE_MANAGER;
+    }
+    
+    /**
+     * Get the store owners associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function storeOwners(): HasMany
+    {
+        return $this->hasMany(StoreOwner::class, 'user_id');
     }
 }

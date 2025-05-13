@@ -1,8 +1,8 @@
 @extends('layouts.auth')
 
-@section('title', 'Two Factor Authentication - Multistore')
-@section('auth_title', 'Two Factor Authentication')
-@section('auth_description', 'Enter your authentication code to continue')
+@section('title', 'المصادقة الثنائية - Multistore')
+@section('auth_title', 'المصادقة الثنائية')
+@section('auth_description', 'أدخل رمز المصادقة للمتابعة')
 
 @section('content')
 <!--begin::Form-->
@@ -12,10 +12,10 @@
     <!--begin::Heading-->
     <div class="text-center mb-10">
         <!--begin::Title-->
-        <h1 class="text-dark mb-3">Two Factor Authentication</h1>
+        <h1 class="text-dark mb-3">المصادقة الثنائية</h1>
         <!--end::Title-->
         <!--begin::Link-->
-        <div class="text-gray-400 fw-bold fs-4">Enter the authentication code from your authenticator app or use a recovery code.</div>
+        <div class="text-gray-400 fw-bold fs-4">أدخل رمز المصادقة من تطبيق المصادقة الخاص بك أو استخدم رمز الاسترداد.</div>
         <!--end::Link-->
     </div>
     <!--begin::Heading-->
@@ -50,10 +50,13 @@
     <div class="mb-10">
         <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
             <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_code">Authentication Code</a>
+                <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_code">رمز المصادقة</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_recovery">Recovery Code</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_email">رمز البريد الإلكتروني</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_recovery">رمز الاسترداد</a>
             </li>
         </ul>
         
@@ -61,15 +64,26 @@
             <div class="tab-pane fade show active" id="kt_tab_pane_code" role="tabpanel">
                 <!--begin::Input group-->
                 <div class="fv-row mb-10">
-                    <label class="form-label fw-bolder text-gray-900 fs-6">Authentication Code</label>
+                    <label class="form-label fw-bolder text-gray-900 fs-6">رمز المصادقة</label>
                     <input class="form-control form-control-lg form-control-solid" type="text" name="code" autocomplete="off" />
+                </div>
+                <!--end::Input group-->
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_email" role="tabpanel">
+                <!--begin::Input group-->
+                <div class="fv-row mb-10">
+                    <label class="form-label fw-bolder text-gray-900 fs-6">رمز البريد الإلكتروني</label>
+                    <input class="form-control form-control-lg form-control-solid" type="text" name="code" autocomplete="off" />
+                    <div class="form-text">
+                        <a href="{{ route('two-factor.send-code') }}" class="link-primary">إرسال رمز جديد إلى البريد الإلكتروني</a>
+                    </div>
                 </div>
                 <!--end::Input group-->
             </div>
             <div class="tab-pane fade" id="kt_tab_pane_recovery" role="tabpanel">
                 <!--begin::Input group-->
                 <div class="fv-row mb-10">
-                    <label class="form-label fw-bolder text-gray-900 fs-6">Recovery Code</label>
+                    <label class="form-label fw-bolder text-gray-900 fs-6">رمز الاسترداد</label>
                     <input class="form-control form-control-lg form-control-solid" type="text" name="recovery_code" autocomplete="off" />
                 </div>
                 <!--end::Input group-->
@@ -80,8 +94,8 @@
     <!--begin::Actions-->
     <div class="text-center">
         <button type="submit" id="kt_two_factor_submit" class="btn btn-lg btn-primary w-100 mb-5">
-            <span class="indicator-label">Continue</span>
-            <span class="indicator-progress">Please wait...
+            <span class="indicator-label">متابعة</span>
+            <span class="indicator-progress">يرجى الانتظار...
             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
         </button>
     </div>
@@ -109,7 +123,7 @@
                         'code': {
                             validators: {
                                 callback: {
-                                    message: 'Please enter a valid authentication code',
+                                    message: 'الرجاء إدخال رمز مصادقة صالح',
                                     callback: function(input) {
                                         const value = input.value;
                                         if (!value) {
@@ -121,6 +135,11 @@
                                             return value.length === 6 && /^[0-9]+$/.test(value);
                                         }
                                         
+                                        // Check if the email OTP tab is active
+                                        if (document.querySelector('#kt_tab_pane_email').classList.contains('active')) {
+                                            return value.length === 6 && /^[0-9]+$/.test(value);
+                                        }
+                                        
                                         return true;
                                     }
                                 }
@@ -129,7 +148,7 @@
                         'recovery_code': {
                             validators: {
                                 callback: {
-                                    message: 'Please enter a valid recovery code',
+                                    message: 'الرجاء إدخال رمز استرداد صالح',
                                     callback: function(input) {
                                         const value = input.value;
                                         
@@ -180,16 +199,26 @@
                         // Submit form
                         form.submit();
                     } else {
-                        // Show error popup
-                        Swal.fire({
-                            text: "Please enter a valid authentication code or recovery code.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
+                        // Add error class to the form controls instead of showing a popup
+                        const activeTab = document.querySelector('.tab-pane.active');
+                        const inputField = activeTab.querySelector('input');
+                        if (inputField) {
+                            inputField.classList.add('is-invalid');
+                            
+                            // Add error message below the input
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'invalid-feedback d-block';
+                            errorDiv.textContent = 'الرجاء إدخال رمز مصادقة أو رمز استرداد صالح.';
+                            
+                            // Remove any existing error message
+                            const existingError = inputField.parentNode.querySelector('.invalid-feedback');
+                            if (existingError) {
+                                existingError.remove();
                             }
-                        });
+                            
+                            // Add the new error message
+                            inputField.parentNode.appendChild(errorDiv);
+                        }
                     }
                 });
             });

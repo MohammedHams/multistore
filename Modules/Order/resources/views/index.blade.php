@@ -74,19 +74,35 @@
                                     <tr>
                                         <td>{{ $order->order_number }}</td>
                                         <td>{{ $order->store_id }}</td>
-                                        <td>{{ $order->name ?? 'N/A' }}</td>
+                                        <td>{{ $order->name ?? 'غير متوفر' }}</td>
                                         <td>${{ number_format($order->total_amount, 2) }}</td>
                                         <td>
                                             <span class="badge bg-{{ $order->status == 'completed' ? 'success' : ($order->status == 'cancelled' ? 'danger' : ($order->status == 'processing' ? 'info' : 'warning')) }}">
-                                                {{ ucfirst($order->status) }}
+                                                @if($order->status == 'completed')
+                                                    مكتمل
+                                                @elseif($order->status == 'cancelled')
+                                                    ملغي
+                                                @elseif($order->status == 'processing')
+                                                    قيد المعالجة
+                                                @else
+                                                    قيد الانتظار
+                                                @endif
                                             </span>
                                         </td>
                                         <td>
                                             <span class="badge bg-{{ $order->payment_status == 'paid' ? 'success' : ($order->payment_status == 'failed' ? 'danger' : ($order->payment_status == 'refunded' ? 'info' : 'warning')) }}">
-                                                {{ ucfirst($order->payment_status) }}
+                                                @if($order->payment_status == 'paid')
+                                                    مدفوع
+                                                @elseif($order->payment_status == 'failed')
+                                                    فشل
+                                                @elseif($order->payment_status == 'refunded')
+                                                    مسترد
+                                                @else
+                                                    قيد الانتظار
+                                                @endif
                                             </span>
                                         </td>
-                                        <td>{{ $order->created_at->format('M d, Y') }}</td>
+                                        <td>{{ $order->created_at->format('Y-m-d') }}</td>
                                         <td>
                                             <div class="btn-group" role="group">
                                                 <a href="{{ route('order.show', $order->id) }}" class="btn btn-info btn-sm">عرض</a>

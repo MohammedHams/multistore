@@ -33,22 +33,22 @@
                     <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch" id="#kt_header_menu" data-kt-menu="true">
                         <div class="menu-item me-lg-1">
                             <a class="menu-link  py-3" href="#">
-                                <span class="menu-title">Dashboard</span>
+                                <span class="menu-title">لوحة التحكم</span>
                             </a>
                         </div>
                         <div class="menu-item me-lg-1">
                             <a class="menu-link  py-3" href="#">
-                                <span class="menu-title">Products</span>
+                                <span class="menu-title">المنتجات</span>
                             </a>
                         </div>
                         <div class="menu-item me-lg-1">
                             <a class="menu-link  py-3" href="#">
-                                <span class="menu-title">Orders</span>
+                                <span class="menu-title">الطلبات</span>
                             </a>
                         </div>
                         <div class="menu-item me-lg-1">
                             <a class="menu-link  py-3" href="#">
-                                <span class="menu-title">Customers</span>
+                                <span class="menu-title">العملاء</span>
                             </a>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                                     <!--end::Svg Icon-->
                                     <!--end::Icon-->
                                     <!--begin::Input-->
-                                    <input type="text" class="form-control form-control-flush ps-10" name="search" value="" placeholder="Search..." data-kt-search-element="input" />
+                                    <input type="text" class="form-control form-control-flush ps-10" name="search" value="" placeholder="بحث..." data-kt-search-element="input" />
                                     <!--end::Input-->
                                     <!--begin::Spinner-->
                                     <span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-1" data-kt-search-element="spinner">
@@ -145,7 +145,7 @@
                                 <!--begin::Username-->
                                 <div class="d-flex flex-column">
                                     <div class="fw-bolder d-flex align-items-center fs-5">{{ Auth::user()->name ?? 'Admin User' }}
-                                    <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Admin</span></div>
+                                    <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">مدير</span></div>
                                     <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ Auth::user()->email ?? 'admin@example.com' }}</a>
                                 </div>
                                 <!--end::Username-->
@@ -157,13 +157,13 @@
                         <!--end::Menu separator-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="#" class="menu-link px-5">My Profile</a>
+                            <a href="#" class="menu-link px-5">ملفي الشخصي</a>
                         </div>
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
                             <a href="#" class="menu-link px-5">
-                                <span class="menu-text">Settings</span>
+                                <span class="menu-text">الإعدادات</span>
                             </a>
                         </div>
                         <!--end::Menu item-->
@@ -176,7 +176,7 @@
                                 @csrf
                                 <a href="{{ route('logout') }}" class="menu-link px-5" 
                                    onclick="event.preventDefault(); this.closest('form').submit();">
-                                    Sign Out
+                                    تسجيل الخروج
                                 </a>
                             </form>
                         </div>

@@ -1,11 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Store\Http\Controllers\StoreController;
+use Modules\Store\Http\Controllers\StoreOwnerController;
+use Modules\Store\Http\Controllers\StoreStaffController;
 
 // Define the controllers once to avoid duplicate class loading
-$storeController = 'StoreController';
-$storeOwnerController = 'StoreOwnerController';
-$storeStaffController = 'StoreStaffController';
+$storeController = StoreController::class;
+$storeOwnerController = StoreOwnerController::class;
+$storeStaffController = StoreStaffController::class;
 
 // Routes with original names but protected by admin guard
 Route::middleware(['auth', 'verified'])->group(function () use ($storeController, $storeOwnerController, $storeStaffController) {

@@ -31,6 +31,24 @@ class StoreStaff extends Model
     ];
     
     /**
+     * Get the user data.
+     *
+     * @return array|null
+     */
+    public function getUserData(): ?array
+    {
+        if (!$this->user) {
+            return null;
+        }
+        
+        return [
+            'id' => $this->user->id,
+            'name' => $this->user->name,
+            'email' => $this->user->email
+        ];
+    }
+    
+    /**
      * Get the user that the staff belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

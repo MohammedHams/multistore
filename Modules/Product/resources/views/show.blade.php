@@ -120,7 +120,7 @@
                             </table>
 
                             <div class="mt-4">
-                                <h6>{{ __('product::products.description') }}</h6>
+                                <h6>الوصف</h6>
                                 <div class="p-3 bg-light rounded">
                                     {!! nl2br(e($product->description)) !!}
                                 </div>
