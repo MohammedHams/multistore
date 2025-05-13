@@ -16,9 +16,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ])
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'admin' => \App\Http\Middleware\AdminGuard::class,
-            'store-owner' => \App\Http\Middleware\StoreOwnerGuard::class,
-            'store-staff' => \App\Http\Middleware\StoreStaffGuard::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

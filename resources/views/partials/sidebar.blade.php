@@ -49,13 +49,13 @@
                         <span class="menu-title">{{ __('dashboard.default') }}</span>
                     </a>
                 </div>
-                
+
                 <div class="menu-item">
                     <div class="menu-content pt-8 pb-2">
-                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">{{ __('dashboard.stores') }}</span>
+                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">المتاجر</span>
                     </div>
                 </div>
-                
+
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -66,7 +66,7 @@
                                 </svg>
                             </span>
                         </span>
-                        <span class="menu-title">Manage Stores</span>
+                        <span class="menu-title">المتاجر</span>
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion">
@@ -88,65 +88,9 @@
                         </div>
                     </div>
                 </div>
-                
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M13 5.91517C15.8 6.41517 18 8.81519 18 11.8152C18 12.5152 17.9 13.2152 17.6 13.9152L20.1 15.3152C20.6 15.6152 21.4 15.4152 21.6 14.8152C21.9 13.9152 22.1 12.9152 22.1 11.8152C22.1 7.01519 18.8 3.11521 14.3 2.01521C13.7 1.91521 13.1 2.31521 13.1 3.01521V5.91517H13Z" fill="black"/>
-                                    <path opacity="0.3" d="M19.1 17.0152C19.7 17.3152 19.8 18.1152 19.3 18.5152C17.5 20.5152 14.9 21.7152 12 21.7152C9.1 21.7152 6.50001 20.5152 4.70001 18.5152C4.30001 18.0152 4.39999 17.3152 4.89999 17.0152L7.39999 15.6152C8.49999 16.9152 10.2 17.8152 12 17.8152C13.8 17.8152 15.5 17.0152 16.6 15.6152L19.1 17.0152ZM6.39999 13.9151C6.19999 13.2151 6 12.5152 6 11.8152C6 8.81517 8.2 6.41515 11 5.91515V3.01519C11 2.41519 10.4 1.91519 9.79999 2.01519C5.29999 3.01519 2 7.01517 2 11.8152C2 12.8152 2.2 13.8152 2.5 14.8152C2.7 15.4152 3.4 15.7152 4 15.3152L6.39999 13.9151Z" fill="black"/>
-                                </svg>
-                            </span>
-                        </span>
-                        <span class="menu-title">Store Management</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('store.index') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Manage Stores</span>
-                            </a>
-                        </div>
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                            <span class="menu-link">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Store Access</span>
-                                <span class="menu-arrow"></span>
-                            </span>
-                            <div class="menu-sub menu-sub-accordion">
-                                <div class="menu-item">
-                                    <a class="menu-link" href="{{ route('store.owners.index', ['store' => 1]) }}">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Store Owners</span>
-                                    </a>
-                                </div>
-                                <div class="menu-item">
-                                    <a class="menu-link" href="{{ route('store.staff.index', ['store' => 1]) }}">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Store Staff</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="menu-item">
-                    <div class="menu-content pt-8 pb-2">
-                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Catalog</span>
-                    </div>
-                </div>
-                
+
+
+
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion ">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -158,7 +102,7 @@
                                 </svg>
                             </span>
                         </span>
-                        <span class="menu-title">Products</span>
+                        <span class="menu-title">ادارة المنتجات</span>
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion">
@@ -167,7 +111,7 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Product List</span>
+                                <span class="menu-title">المنجات</span>
                             </a>
                         </div>
                         <div class="menu-item">
@@ -175,26 +119,19 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Add Product</span>
+                                <span class="menu-title">اضافة منتج</span>
                             </a>
                         </div>
-                        <div class="menu-item">
-                            <a class="menu-link " href="#">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Categories</span>
-                            </a>
-                        </div>
+
                     </div>
                 </div>
-                
+
                 <div class="menu-item">
                     <div class="menu-content pt-8 pb-2">
                         <span class="menu-section text-muted text-uppercase fs-8 ls-1">Sales</span>
                     </div>
                 </div>
-                
+
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion ">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -205,7 +142,7 @@
                                 </svg>
                             </span>
                         </span>
-                        <span class="menu-title">Orders</span>
+                        <span class="menu-title">ادارة الطلبات</span>
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion">
@@ -214,7 +151,7 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Order List</span>
+                                <span class="menu-title">الطلبات</span>
                             </a>
                         </div>
                         <div class="menu-item">
@@ -222,38 +159,21 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Add Order</span>
+                                <span class="menu-title">اضافة طلبية</span>
                             </a>
                         </div>
                     </div>
                 </div>
-                
-                <div class="menu-item">
-                    <div class="menu-content pt-8 pb-2">
-                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Customers</span>
-                    </div>
-                </div>
-                
-                <div class="menu-item">
-                    <a class="menu-link " href="#">
-                        <span class="menu-icon">
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="black" />
-                                    <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="black" />
-                                </svg>
-                            </span>
-                        </span>
-                        <span class="menu-title">Customers</span>
-                    </a>
-                </div>
-                
+
+
+
+
                 <div class="menu-item">
                     <div class="menu-content pt-8 pb-2">
                         <span class="menu-section text-muted text-uppercase fs-8 ls-1">Settings</span>
                     </div>
                 </div>
-                
+
                 <div class="menu-item">
                     <a class="menu-link " href="#">
                         <span class="menu-icon">

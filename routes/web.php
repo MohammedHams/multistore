@@ -40,7 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // User profile (accessible to all authenticated users)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    
+
     // Fallback route for authenticated users who are not admins
     Route::get('/access-denied', function () {
         return view('access-denied');
@@ -48,7 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // Admin protected routes
-Route::middleware(['auth', 'verified', 'admin'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard (only accessible to admins)
     Route::get('/', function () {
         return view('dashboard');

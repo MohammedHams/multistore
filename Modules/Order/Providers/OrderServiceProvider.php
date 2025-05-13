@@ -3,10 +3,10 @@
 namespace Modules\Order\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\Order\app\Repositories\Eloquent\OrderRepository;
-use Modules\Order\app\Repositories\Interfaces\OrderRepositoryInterface;
-use Modules\Order\app\Repositories\Eloquent\OrderItemRepository;
-use Modules\Order\app\Repositories\Interfaces\OrderItemRepositoryInterface;
+use Modules\Order\Repositories\Eloquent\OrderRepository;
+use Modules\Order\Repositories\Interfaces\OrderRepositoryInterface;
+use Modules\Order\Repositories\Eloquent\OrderItemRepository;
+use Modules\Order\Repositories\Interfaces\OrderItemRepositoryInterface;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;

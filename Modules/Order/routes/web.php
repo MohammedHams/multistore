@@ -1,13 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Order\app\Http\Controllers\OrderController;
 
 // Define the controller once to avoid duplicate class loading
-$orderController = OrderController::class;
+$orderController = 'OrderController';
 
 // Routes with original names but protected by admin guard
-Route::middleware(['auth', 'verified', 'admin'])->group(function () use ($orderController) {
+Route::middleware(['auth', 'verified'])->group(function () use ($orderController) {
     Route::prefix('orders')->group(function () use ($orderController) {
         Route::get('/', [$orderController, 'index'])->name('order.index');
         Route::get('/create', [$orderController, 'create'])->name('order.create');
@@ -16,7 +15,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () use ($orderC
         Route::get('/{id}/edit', [$orderController, 'edit'])->name('order.edit');
         Route::put('/{id}', [$orderController, 'update'])->name('order.update');
         Route::delete('/{id}', [$orderController, 'destroy'])->name('order.destroy');
-        
+
         // Additional routes
         Route::put('/{id}/status', [$orderController, 'updateStatus'])->name('order.update.status');
         Route::put('/{id}/payment-status', [$orderController, 'updatePaymentStatus'])->name('order.update.payment-status');
@@ -33,7 +32,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->group(functio
         Route::get('/{id}/edit', [$orderController, 'edit'])->name('admin.order.edit');
         Route::put('/{id}', [$orderController, 'update'])->name('admin.order.update');
         Route::delete('/{id}', [$orderController, 'destroy'])->name('admin.order.destroy');
-        
+
         // Additional routes
         Route::put('/{id}/status', [$orderController, 'updateStatus'])->name('admin.order.update.status');
         Route::put('/{id}/payment-status', [$orderController, 'updatePaymentStatus'])->name('admin.order.update.payment-status');
@@ -50,7 +49,7 @@ Route::middleware(['auth', 'verified', 'store-owner'])->prefix('store-owner')->g
         Route::get('/{id}/edit', [$orderController, 'edit'])->name('store-owner.order.edit');
         Route::put('/{id}', [$orderController, 'update'])->name('store-owner.order.update');
         Route::delete('/{id}', [$orderController, 'destroy'])->name('store-owner.order.destroy');
-        
+
         // Additional routes
         Route::put('/{id}/status', [$orderController, 'updateStatus'])->name('store-owner.order.update.status');
         Route::put('/{id}/payment-status', [$orderController, 'updatePaymentStatus'])->name('store-owner.order.update.payment-status');
@@ -67,14 +66,14 @@ Route::middleware(['auth', 'verified', 'store-staff'])->prefix('store-staff')->g
         Route::get('/{id}/edit', [$orderController, 'edit'])->name('store-staff.order.edit');
         Route::put('/{id}', [$orderController, 'update'])->name('store-staff.order.update');
         Route::delete('/{id}', [$orderController, 'destroy'])->name('store-staff.order.destroy');
-        
+
         // Additional routes
         Route::put('/{id}/status', [$orderController, 'updateStatus'])->name('store-staff.order.update.status');
         Route::put('/{id}/payment-status', [$orderController, 'updatePaymentStatus'])->name('store-staff.order.update.payment-status');
     });
 });
 
-Route::prefix('stores/{storeId}/orders')->group(function () {
-    Route::get('/', [OrderController::class, 'indexByStore'])->name('store.order.index');
-    Route::get('/create', [OrderController::class, 'createForStore'])->name('store.order.create');
+Route::prefix('stores/{storeId}/orders')->group(function () use ($orderController) {
+    Route::get('/', [$orderController, 'indexByStore'])->name('store.order.index');
+    Route::get('/create', [$orderController, 'createForStore'])->name('store.order.create');
 });

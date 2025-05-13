@@ -4,8 +4,8 @@ namespace Modules\Product\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Modules\Product\app\Repositories\Eloquent\ProductRepository;
-use Modules\Product\app\Repositories\Interfaces\ProductRepositoryInterface;
+use Modules\Product\Repositories\Eloquent\ProductRepository;
+use Modules\Product\Repositories\Interfaces\ProductRepositoryInterface;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -42,6 +42,12 @@ class ProductServiceProvider extends ServiceProvider
         $this->app->bind(
             ProductRepositoryInterface::class,
             ProductRepository::class
+        );
+        
+        // Bind the ProductModel as the concrete implementation when Product entity is requested
+        $this->app->bind(
+            \Modules\Product\Entities\Product::class,
+            \Modules\Product\Entities\ProductModel::class
         );
     }
 
