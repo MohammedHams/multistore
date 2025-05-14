@@ -56,6 +56,12 @@ Route::middleware(['auth:store-owner'])->prefix('store-owner')->group(function (
     Route::middleware(['\App\Http\Middleware\CheckPermission:edit-store'])->group(function () {
         Route::get('stores/{store}/edit', [\Modules\Store\Http\Controllers\StoreController::class, 'edit'])->name('store-owner.store.edit');
         Route::put('stores/{store}', [\Modules\Store\Http\Controllers\StoreController::class, 'update'])->name('store-owner.store.update');
+        
+        // Store Owners Management
+        Route::get('stores/{store}/owners', [\Modules\Store\Http\Controllers\StoreOwnerController::class, 'index'])->name('store-owner.store.owners.index');
+        Route::get('stores/{store}/owners/create', [\Modules\Store\Http\Controllers\StoreOwnerController::class, 'create'])->name('store-owner.store.owners.create');
+        Route::post('stores/{store}/owners', [\Modules\Store\Http\Controllers\StoreOwnerController::class, 'store'])->name('store-owner.store.owners.store');
+        Route::delete('stores/{store}/owners/{user}', [\Modules\Store\Http\Controllers\StoreOwnerController::class, 'destroy'])->name('store-owner.store.owners.destroy');
     });
 
     // Store Staff Management

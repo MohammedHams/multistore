@@ -89,10 +89,6 @@ class StoreOwner extends Authenticatable
      */
     public function hasPermission(string $permission): bool
     {
-        if (empty($this->permissions)) {
-            return false;
-        }
-        
         // Store owners have these permissions by default
         $defaultPermissions = [
             'view-store', 'edit-store', 
@@ -101,8 +97,16 @@ class StoreOwner extends Authenticatable
             'manage-staff'
         ];
         
+        // Ensure permissions is an array
+        $permissions = $this->permissions;
+        if (is_string($permissions)) {
+            $permissions = json_decode($permissions, true) ?? [];
+        } elseif (empty($permissions)) {
+            $permissions = [];
+        }
+        
         // Merge default permissions with any custom permissions
-        $allPermissions = array_merge($defaultPermissions, $this->permissions ?? []);
+        $allPermissions = array_merge($defaultPermissions, $permissions);
         
         // Check if the store owner has the permission
         return in_array($permission, $allPermissions);

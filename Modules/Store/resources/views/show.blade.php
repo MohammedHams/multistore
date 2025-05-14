@@ -107,7 +107,7 @@ $pageTitle = 'تفاصيل المتجر' . ': ' . $storeModel->name;
                                     $userId = $owner->getUserData()['id'] ?? $owner->user_id;
                                     $user = \App\Models\User::find($userId);
                                 @endphp
-                                <form action="{{ route('store.owners.destroy', ['store' => $storeModel->id, 'user' => $user]) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ __('store.are_you_sure_remove_owner') }}');">
+                                <form action="{{ route('store-owner.store.owners.destroy', ['store' => $storeModel->id, 'user' => $user]) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ __('store.are_you_sure_remove_owner') }}');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" data-bs-toggle="tooltip" title="{{ __('store.remove_owner') }}">
