@@ -10,14 +10,14 @@ $pageTitle = 'المتاجر';
         <div class="card-header">
             <h3 class="card-title">المتاجر</h3>
             <div class="card-toolbar">
-                <a href="{{ route('store.create') }}" class="btn btn-sm btn-primary">
+                <a href="{{ route('admin.store.create') }}" class="btn btn-sm btn-primary">
                     <i class="fas fa-plus"></i> إضافة متجر
                 </a>
             </div>
         </div>
         <div class="card-body">
             <!-- Search & Filters -->
-            <form action="{{ route('store.index') }}" method="GET" class="mb-7">
+            <form action="{{ route('admin.store.index') }}" method="GET" class="mb-7">
                 <div class="row mb-4">
                     <div class="col-lg-4 mb-lg-0 mb-4">
                         <label class="form-label">بحث</label>
@@ -42,7 +42,7 @@ $pageTitle = 'المتاجر';
                     </div>
                     <div class="col-lg-2 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary me-2">تصفية</button>
-                        <a href="{{ route('store.index') }}" class="btn btn-secondary">إعادة تعيين</a>
+                        <a href="{{ route('admin.store.index') }}" class="btn btn-secondary">إعادة تعيين</a>
                     </div>
                 </div>
             </form>
@@ -85,13 +85,13 @@ $pageTitle = 'المتاجر';
                             </td>
                             <td>{{ $store->created_at->format('Y-m-d') }}</td>
                             <td>
-                                <a href="{{ route('store.show', $store->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="عرض">
+                                <a href="{{ route('admin.store.show', $store->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="عرض">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="{{ route('store.edit', $store->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="تعديل">
+                                <a href="{{ route('admin.store.edit', $store->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="تعديل">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('store.destroy', $store->id) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد من حذف هذا المتجر؟');">
+                                <form action="{{ route('admin.store.destroy', $store->id) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد من حذف هذا المتجر؟');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" data-bs-toggle="tooltip" title="حذف">

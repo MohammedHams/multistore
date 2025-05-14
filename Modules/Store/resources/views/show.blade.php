@@ -10,10 +10,10 @@ $pageTitle = 'تفاصيل المتجر' . ': ' . $storeModel->name;
         <div class="card-header">
             <h3 class="card-title">تفاصيل المتجر</h3>
             <div class="card-toolbar">
-                <a href="{{ route('store.index') }}" class="btn btn-sm btn-secondary me-2">
+                <a href="{{ route('admin.store.index') }}" class="btn btn-sm btn-secondary me-2">
                     <i class="fas fa-arrow-left"></i> العودة إلى المتاجر
                 </a>
-                <a href="{{ route('store.edit', $storeModel->id) }}" class="btn btn-sm btn-primary">
+                <a href="{{ route('admin.store.edit', $storeModel->id) }}" class="btn btn-sm btn-primary">
                     <i class="fas fa-edit"></i> تعديل المتجر
                 </a>
             </div>
@@ -80,7 +80,7 @@ $pageTitle = 'تفاصيل المتجر' . ': ' . $storeModel->name;
         <div class="card-header">
             <h3 class="card-title">مالكو المتجر</h3>
             <div class="card-toolbar">
-                <a href="{{ route('store.owners.create', $storeModel->id) }}" class="btn btn-sm btn-primary">
+                <a href="{{ route('admin.store.owners.create', $storeModel->id) }}" class="btn btn-sm btn-primary">
                     <i class="fas fa-plus"></i> إضافة مالك
                 </a>
             </div>
@@ -132,7 +132,7 @@ $pageTitle = 'تفاصيل المتجر' . ': ' . $storeModel->name;
         <div class="card-header">
             <h3 class="card-title">موظفو المتجر</h3>
             <div class="card-toolbar">
-                <a href="{{ route('store.staff.create', $storeModel->id) }}" class="btn btn-sm btn-primary">
+                <a href="{{ route('admin.store.staff.create', $storeModel->id) }}" class="btn btn-sm btn-primary">
                     <i class="fas fa-plus"></i> إضافة موظف
                 </a>
             </div>
@@ -158,16 +158,25 @@ $pageTitle = 'تفاصيل المتجر' . ': ' . $storeModel->name;
                             <td>
                                 @php
                                     $userId = $staffMember->user_id ?? ($staffMember->getUserData()['id'] ?? 0);
-                                    $staffPermissions = \App\Models\StoreStaff::where('store_id', $storeModel->id)
+                                    $staffModel = \App\Models\StoreStaff::where('store_id', $storeModel->id)
                                         ->where('user_id', $userId)
-                                        ->first()
-                                        ->permissions ?? [];
+                                        ->first();
+
+                                    // Ensure permissions is an array
+                                    $staffPermissions = [];
+                                    if ($staffModel && $staffModel->permissions) {
+                                        if (is_string($staffModel->permissions)) {
+                                            $staffPermissions = json_decode($staffModel->permissions, true) ?? [];
+                                        } else {
+                                            $staffPermissions = $staffModel->permissions;
+                                        }
+                                    }
                                 @endphp
-                                
+
                                 @foreach($staffPermissions as $permission)
                                     <span class="badge badge-primary me-1">{{ $permission }}</span>
                                 @endforeach
-                                
+
                                 @if(empty($staffPermissions))
                                     <span class="text-muted">لا توجد صلاحيات</span>
                                 @endif
@@ -177,10 +186,10 @@ $pageTitle = 'تفاصيل المتجر' . ': ' . $storeModel->name;
                                     $userId = $staffMember->getUserData()['id'];
                                     $user = \App\Models\User::find($userId);
                                 @endphp
-                                <a href="{{ route('store.staff.edit', [$storeModel->id, $user]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="تعديل صلاحيات الموظف">
+                                <a href="{{ route('admin.store.staff.edit', [$storeModel->id, $user]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="تعديل صلاحيات الموظف">
                                     <i class="fas fa-key"></i>
                                 </a>
-                                <form action="{{ route('store.staff.destroy', [$storeModel->id, $user]) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد من إزالة هذا الموظف؟');">
+                                <form action="{{ route('admin.store.staff.destroy', [$storeModel->id, $user]) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد من إزالة هذا الموظف؟');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" data-bs-toggle="tooltip" title="إزالة الموظف">

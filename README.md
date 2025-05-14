@@ -146,17 +146,17 @@ php artisan queue:flush
 
 ### Admin Login
 - URL: `/admin/login`
-- Email: `admin@example.com`
+- Email: `admin_new@example.com`
 - Password: `password`
 
 ### Store Owner Login
 - URL: `/store-owner/login`
-- Email: `owner@example.com`
+- Email: `owner_new@example.com`
 - Password: `password`
 
 ### Store Staff Login
 - URL: `/store-staff/login`
-- Email: `staff@example.com`
+- Email: `staff1@example.com`
 - Password: `password`
 
 ## Project Structure

@@ -10,10 +10,10 @@ $pageTitle = 'Store Staff: ' . $store->name;
         <div class="card-header">
             <h3 class="card-title">{{ __('Store Staff') }}: {{ $store->name }}</h3>
             <div class="card-toolbar">
-                <a href="{{ route('store.show', $store->id) }}" class="btn btn-sm btn-secondary me-2">
+                <a href="{{ route('admin.store.show', $store->id) }}" class="btn btn-sm btn-secondary me-2">
                     <i class="fas fa-arrow-left"></i> {{ __('Back to Store') }}
                 </a>
-                <a href="{{ route('store.staff.create', $store->id) }}" class="btn btn-sm btn-primary">
+                <a href="{{ route('admin.store.staff.create', $store->id) }}" class="btn btn-sm btn-primary">
                     <i class="fas fa-plus"></i> {{ __('Add Staff') }}
                 </a>
             </div>
@@ -83,10 +83,10 @@ $pageTitle = 'Store Staff: ' . $store->name;
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('store.staff.edit', [$store->id, $staffMember->getId()]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="{{ __('Edit Permissions') }}">
+                                <a href="{{ route('admin.store.staff.edit', [$store->id, $staffMember->getId()]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="{{ __('Edit Permissions') }}">
                                     <i class="fas fa-key"></i>
                                 </a>
-                                <form action="{{ route('store.staff.destroy', [$store->id, $staffMember->getId()]) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ __('Are you sure you want to remove this staff member?') }}');">
+                                <form action="{{ route('admin.store.staff.destroy', [$store->id, $staffMember->getId()]) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ __('Are you sure you want to remove this staff member?') }}');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" data-bs-toggle="tooltip" title="{{ __('Remove Staff') }}">

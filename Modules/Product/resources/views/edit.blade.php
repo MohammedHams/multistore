@@ -8,8 +8,8 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">تعديل المنتج: {{ $product->name }}</h5>
                     <div>
-                        <a href="{{ route('product.index') }}" class="btn btn-secondary btn-sm">العودة إلى القائمة</a>
-                        <a href="{{ route('product.show', $product->id) }}" class="btn btn-info btn-sm">تفاصيل المنتج</a>
+                        <a href="{{ route('admin.product.index') }}" class="btn btn-secondary btn-sm">العودة إلى القائمة</a>
+                        <a href="{{ route('admin.product.show', $product->id) }}" class="btn btn-info btn-sm">تفاصيل المنتج</a>
                     </div>
                 </div>
 
@@ -20,7 +20,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('product.update', $product->id) }}" method="POST">
+                    <form action="{{ route('admin.product.update', $product->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         
@@ -121,7 +121,7 @@
                         </div>
                         
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="{{ route('product.show', $product->id) }}" class="btn btn-secondary">إلغاء</a>
+                            <a href="{{ route('admin.product.show', $product->id) }}" class="btn btn-secondary">إلغاء</a>
                             <button type="submit" class="btn btn-primary">تحديث المنتج</button>
                         </div>
                     </form>

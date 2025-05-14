@@ -8,8 +8,8 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">رقم الطلب: {{ $order->order_number }}</h5>
                     <div>
-                        <a href="{{ route('order.index') }}" class="btn btn-secondary btn-sm">العودة إلى القائمة</a>
-                        <a href="{{ route('order.edit', $order->id) }}" class="btn btn-primary btn-sm">تعديل</a>
+                        <a href="{{ route('admin.order.index') }}" class="btn btn-secondary btn-sm">العودة إلى القائمة</a>
+                        <a href="{{ route('admin.order.edit', $order->id) }}" class="btn btn-primary btn-sm">تعديل</a>
                     </div>
                 </div>
 
@@ -158,7 +158,7 @@
                                     <h6 class="mb-0">تحديث حالة الطلب</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form action="{{ route('order.update.status', $order->id) }}" method="POST">
+                                    <form action="{{ route('admin.order.update.status', $order->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <div class="mb-3">
@@ -181,7 +181,7 @@
                                     <h6 class="mb-0">تحديث حالة الدفع</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form action="{{ route('order.update.payment-status', $order->id) }}" method="POST">
+                                    <form action="{{ route('admin.order.update.payment-status', $order->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <div class="mb-3">

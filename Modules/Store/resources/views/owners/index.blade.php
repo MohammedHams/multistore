@@ -10,10 +10,10 @@ $pageTitle = __('store.store_owners') . ': ' . $store->name;
         <div class="card-header">
             <h3 class="card-title">{{ __('store.store_owners') }}: {{ $store->name }}</h3>
             <div class="card-toolbar">
-                <a href="{{ route('store.show', $store->id) }}" class="btn btn-sm btn-secondary me-2">
+                <a href="{{ route('admin.store.show', $store->id) }}" class="btn btn-sm btn-secondary me-2">
                     <i class="fas fa-arrow-left"></i> {{ __('store.back_to_store') }}
                 </a>
-                <a href="{{ route('store.owners.create', $store->id) }}" class="btn btn-sm btn-primary">
+                <a href="{{ route('admin.store.owners.create', $store->id) }}" class="btn btn-sm btn-primary">
                     <i class="fas fa-plus"></i> {{ __('store.add_owner') }}
                 </a>
             </div>

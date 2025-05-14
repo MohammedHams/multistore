@@ -14,6 +14,6 @@ class RegisterViewResponse implements RegisterViewResponseContract
      */
     public function toResponse($request)
     {
-        return view('auth.register');
+        return view('auth.admin.login');
     }
 }

@@ -10,13 +10,13 @@ $pageTitle = __('store.add_staff_to_store') . ': ' . $store->name;
         <div class="card-header">
             <h3 class="card-title">{{ __('store.add_staff_to_store') }}: {{ $store->name }}</h3>
             <div class="card-toolbar">
-                <a href="{{ route('store.staff.index', $store) }}" class="btn btn-sm btn-secondary">
+                <a href="{{ route('admin.store.staff.index', $store) }}" class="btn btn-sm btn-secondary">
                     <i class="fas fa-arrow-left"></i> {{ __('store.back_to_staff') }}
                 </a>
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('store.staff.store', $store) }}" method="POST">
+            <form action="{{ route('admin.store.staff.store', $store) }}" method="POST">
                 @csrf
                 
                 <div class="mb-4">

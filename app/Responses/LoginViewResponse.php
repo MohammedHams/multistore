@@ -14,6 +14,6 @@ class LoginViewResponse implements LoginViewResponseContract
      */
     public function toResponse($request)
     {
-        return view('auth.login');
+        return view('/');
     }
 }

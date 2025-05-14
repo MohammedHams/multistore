@@ -8,8 +8,8 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">تفاصيل المنتج</h5>
                     <div>
-                        <a href="{{ route('product.index') }}" class="btn btn-secondary btn-sm">العودة إلى القائمة</a>
-                        <a href="{{ route('product.edit', $product->id) }}" class="btn btn-primary btn-sm">تعديل</a>
+                        <a href="{{ route('admin.product.index') }}" class="btn btn-secondary btn-sm">العودة إلى القائمة</a>
+                        <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-primary btn-sm">تعديل</a>
                     </div>
                 </div>
 
@@ -43,7 +43,7 @@
                                     <h6 class="mb-0">إدارة المخزون</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form action="{{ route('product.update.stock', $product->id) }}" method="POST">
+                                    <form action="{{ route('admin.product.update.stock', $product->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <div class="mb-3">
@@ -103,7 +103,7 @@
                                     <tr>
                                         <th>المتجر</th>
                                         <td>
-                                            <a href="{{ route('store.show', $product->store_id) }}">
+                                            <a href="{{ route('admin.store.show', $product->store_id) }}">
                                                 {{ $product->store_id }}
                                             </a>
                                         </td>

@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">المنتجات</h5>
-                    <a href="{{ route('product.create') }}" class="btn btn-primary btn-sm">إنشاء منتج</a>
+                    <a href="{{ route('admin.product.create') }}" class="btn btn-primary btn-sm">إنشاء منتج</a>
                 </div>
 
                 <div class="card-body">
@@ -24,7 +24,7 @@
                     @endif
 
                     <div class="mb-3">
-                        <form action="{{ route('product.index') }}" method="GET" class="row g-3">
+                        <form action="{{ route('admin.product.index') }}" method="GET" class="row g-3">
                             <div class="col-md-3">
                                 <input type="text" name="search" class="form-control" placeholder="بحث عن منتجات..." value="{{ request('search') }}">
                             </div>
@@ -45,7 +45,7 @@
                                 <button type="submit" class="btn btn-primary w-100">تصفية</button>
                             </div>
                             <div class="col-md-1">
-                                <a href="{{ route('product.index') }}" class="btn btn-secondary w-100">إعادة تعيين</a>
+                                <a href="{{ route('admin.product.index') }}" class="btn btn-secondary w-100">إعادة تعيين</a>
                             </div>
                         </form>
                     </div>
@@ -86,9 +86,9 @@
                                         </td>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <a href="{{ route('product.show', $product->id) }}" class="btn btn-info btn-sm">عرض</a>
-                                                <a href="{{ route('product.edit', $product->id) }}" class="btn btn-primary btn-sm">تعديل</a>
-                                                <form action="{{ route('product.destroy', $product->id) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد أنك تريد حذف هذا المنتج؟');">
+                                                <a href="{{ route('admin.product.show', $product->id) }}" class="btn btn-info btn-sm">عرض</a>
+                                                <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-primary btn-sm">تعديل</a>
+                                                <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد أنك تريد حذف هذا المنتج؟');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm">حذف</button>

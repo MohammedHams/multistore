@@ -10,16 +10,16 @@ $pageTitle = 'تعديل المتجر';
         <div class="card-header">
             <h3 class="card-title">تعديل المتجر: {{ $store->name }}</h3>
             <div class="card-toolbar">
-                <a href="{{ route('store.index') }}" class="btn btn-sm btn-secondary">
+                <a href="{{ route('admin.store.index') }}" class="btn btn-sm btn-secondary">
                     <i class="fas fa-arrow-left"></i> العودة إلى المتاجر
                 </a>
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('store.update', $store) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.store.update', $store) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                
+
                 <div class="mb-4">
                     <label for="name" class="form-label required">الاسم</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $store->name) }}" required>
@@ -27,7 +27,7 @@ $pageTitle = 'تعديل المتجر';
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                
+
                 <div class="mb-4">
                     <label for="domain" class="form-label required">النطاق</label>
                     <input type="text" class="form-control @error('domain') is-invalid @enderror" id="domain" name="domain" value="{{ old('domain', $store->domain) }}" required>
@@ -36,7 +36,7 @@ $pageTitle = 'تعديل المتجر';
                     @enderror
                     <div class="form-text">النطاق (مثال: mystore.com)</div>
                 </div>
-                
+
                 <div class="mb-4">
                     <label for="email" class="form-label required">البريد الإلكتروني</label>
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $store->email) }}" required>
@@ -44,7 +44,7 @@ $pageTitle = 'تعديل المتجر';
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                
+
                 <div class="mb-4">
                     <label for="phone" class="form-label required">رقم الهاتف</label>
                     <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone', $store->phone) }}" required>
@@ -52,7 +52,7 @@ $pageTitle = 'تعديل المتجر';
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                
+
                 <div class="mb-4">
                     <label for="logo" class="form-label">الشعار</label>
                     @if($store->logo)
@@ -66,7 +66,7 @@ $pageTitle = 'تعديل المتجر';
                     @enderror
                     <div class="form-text">الحجم الموصى به: 200x200px. الحجم الأقصى: 2MB.</div>
                 </div>
-                
+
                 <div class="mb-4">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="is_active" name="is_active" value="1" {{ old('is_active', $store->is_active) == '1' ? 'checked' : '' }}>
@@ -74,7 +74,7 @@ $pageTitle = 'تعديل المتجر';
                     </div>
                     <div class="form-text">إذا تم تحديده، سيكون المتجر نشطًا</div>
                 </div>
-                
+
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i> تحديث المتجر

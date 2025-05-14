@@ -16,7 +16,7 @@ $pageTitle = __('store.add_owner_to_store') . ': ' . $store->name;
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('store.owners.store', $store) }}" method="POST">
+            <form action="{{ route('admin.store.owners.store', $store) }}" method="POST">
                 @csrf
                 
                 <div class="mb-4">
