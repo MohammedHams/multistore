@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('payment_status')->default('pending');
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
         
         Schema::table('orders', function (Blueprint $table) {

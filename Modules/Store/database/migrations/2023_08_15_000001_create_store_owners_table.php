@@ -17,6 +17,7 @@ class CreateStoreOwnersTable extends Migration
             $table->id();
             $table->foreignId('store_id')->constrained('stores')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->json('permissions')->nullable();
             $table->timestamps();
 
             // Add unique constraint to prevent duplicate entries

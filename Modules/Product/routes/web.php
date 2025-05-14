@@ -11,25 +11,23 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
 
 // Store Owner routes - access only to their store's products
 Route::middleware(['auth:store-owner'])->prefix('store-owner')->group(function () {
-    Route::middleware(['permission:manage-products'])->group(function () {
-        Route::resource('products', 'ProductController')->names('store-owner.product');
-        Route::put('products/{id}/stock', ['ProductController', 'updateStock'])->name('store-owner.product.update.stock');
-    });
+    Route::resource('products', 'ProductController')->names('store-owner.product');
+    Route::put('products/{id}/stock', ['ProductController', 'updateStock'])->name('store-owner.product.update.stock');
 });
 
-// Store Staff routes - access based on permissions
+// Store Staff routes
 Route::middleware(['auth:store-staff'])->prefix('store-staff')->group(function () {
-    // View products - requires view-products permission
-    Route::get('products', ['ProductController', 'index'])->middleware(['permission:view-products'])->name('store-staff.product.index');
-    Route::get('products/{id}', ['ProductController', 'show'])->middleware(['permission:view-products'])->name('store-staff.product.show');
+    // View products
+    Route::get('products', ['ProductController', 'index'])->name('store-staff.product.index');
+    Route::get('products/{id}', ['ProductController', 'show'])->name('store-staff.product.show');
     
-    // Create/edit products - requires manage-products permission
-    Route::get('products/create', ['ProductController', 'create'])->middleware(['permission:manage-products'])->name('store-staff.product.create');
-    Route::post('products', ['ProductController', 'store'])->middleware(['permission:manage-products'])->name('store-staff.product.store');
-    Route::get('products/{id}/edit', ['ProductController', 'edit'])->middleware(['permission:manage-products'])->name('store-staff.product.edit');
-    Route::put('products/{id}', ['ProductController', 'update'])->middleware(['permission:manage-products'])->name('store-staff.product.update');
-    Route::put('products/{id}/stock', ['ProductController', 'updateStock'])->middleware(['permission:manage-products'])->name('store-staff.product.update.stock');
+    // Create/edit products
+    Route::get('products/create', ['ProductController', 'create'])->name('store-staff.product.create');
+    Route::post('products', ['ProductController', 'store'])->name('store-staff.product.store');
+    Route::get('products/{id}/edit', ['ProductController', 'edit'])->name('store-staff.product.edit');
+    Route::put('products/{id}', ['ProductController', 'update'])->name('store-staff.product.update');
+    Route::put('products/{id}/stock', ['ProductController', 'updateStock'])->name('store-staff.product.update.stock');
     
-    // Delete products - requires delete-products permission
-    Route::delete('products/{id}', ['ProductController', 'destroy'])->middleware(['permission:delete-products'])->name('store-staff.product.destroy');
+    // Delete products
+    Route::delete('products/{id}', ['ProductController', 'destroy'])->name('store-staff.product.destroy');
 });

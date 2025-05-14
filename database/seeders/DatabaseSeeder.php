@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
             StoreOwnerSeeder::class,
             StaffSeeder::class,
             MultiGuardAuthSeeder::class,
+            TwoFactorAuthSeeder::class,
+            UsersTableSeeder::class,
         ]);
     }
 }

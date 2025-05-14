@@ -38,53 +38,40 @@ $pageTitle = 'Store Staff: ' . $store->name;
                             <td>{{ $staffMember->getUserData()['email'] }}</td>
                             <td>
                                 @php
-                                    $userId = $staffMember->getUserData()['id'];
-                                    $user = \App\Models\User::find($userId);
-                                    $storeId = $store->id;
+                                    // Get staff permissions from the entity
+                                    $permissions = $staffMember->getPermissions() ?? [];
+                                    
+                                    // Map permissions to display categories
+                                    $permissionMap = [
+                                        'view_store' => 'view',
+                                        'edit_store' => 'edit',
+                                        'view_products' => 'view',
+                                        'manage_products' => 'edit',
+                                        'delete_products' => 'delete',
+                                        'view_orders' => 'view',
+                                        'manage_orders' => 'edit',
+                                        'delete_orders' => 'delete',
+                                        'manage_staff' => 'admin'
+                                    ];
                                     
                                     // Define permission groups and their labels
                                     $permissionGroups = [
                                         'view' => __('View'),
-                                        'create' => __('Create'),
                                         'edit' => __('Edit'),
-                                        'delete' => __('Delete')
+                                        'delete' => __('Delete'),
+                                        'admin' => __('Admin')
                                     ];
                                     
-                                    // Check which permission groups the user has
+                                    // Collect unique permission categories
                                     $userPermissions = [];
-                                    
-                                    // View permissions
-                                    if ($user->hasAllPermissions([
-                                        'view-store-' . $storeId,
-                                        'view-products-store-' . $storeId,
-                                        'view-orders-store-' . $storeId,
-                                    ])) {
-                                        $userPermissions[] = 'view';
+                                    foreach ($permissions as $permission) {
+                                        if (isset($permissionMap[$permission])) {
+                                            $userPermissions[$permissionMap[$permission]] = true;
+                                        }
                                     }
+                                    $userPermissions = array_keys($userPermissions);
                                     
-                                    // Create permissions
-                                    if ($user->hasAllPermissions([
-                                        'create-products-store-' . $storeId,
-                                        'create-orders-store-' . $storeId,
-                                    ])) {
-                                        $userPermissions[] = 'create';
-                                    }
-                                    
-                                    // Edit permissions
-                                    if ($user->hasAllPermissions([
-                                        'edit-store-' . $storeId,
-                                        'edit-products-store-' . $storeId,
-                                        'edit-orders-store-' . $storeId,
-                                        'update-order-status-store-' . $storeId,
-                                        'update-payment-status-store-' . $storeId,
-                                    ])) {
-                                        $userPermissions[] = 'edit';
-                                    }
-                                    
-                                    // Delete permissions
-                                    if ($user->hasPermissionTo('delete-products-store-' . $storeId)) {
-                                        $userPermissions[] = 'delete';
-                                    }
+                                    // No additional permission checks needed as we've already processed them above
                                 @endphp
                                 
                                 @foreach($userPermissions as $permission)
@@ -96,14 +83,10 @@ $pageTitle = 'Store Staff: ' . $store->name;
                                 @endif
                             </td>
                             <td>
-                                @php
-                                    $userId = $staffMember->getUserData()['id'];
-                                    $user = \App\Models\User::find($userId);
-                                @endphp
-                                <a href="{{ route('store.staff.edit', [$store->id, $user]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="{{ __('Edit Permissions') }}">
+                                <a href="{{ route('store.staff.edit', [$store->id, $staffMember->getId()]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="{{ __('Edit Permissions') }}">
                                     <i class="fas fa-key"></i>
                                 </a>
-                                <form action="{{ route('store.staff.destroy', [$store->id, $user]) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ __('Are you sure you want to remove this staff member?') }}');">
+                                <form action="{{ route('store.staff.destroy', [$store->id, $staffMember->getId()]) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ __('Are you sure you want to remove this staff member?') }}');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" data-bs-toggle="tooltip" title="{{ __('Remove Staff') }}">

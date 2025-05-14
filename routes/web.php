@@ -42,6 +42,24 @@ Route::middleware('guest:admin')->group(function () {
     Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
 });
 
+// Two-Factor Authentication Routes for all user types
+Route::middleware(['web'])->group(function () {
+    // Common two-factor challenge routes
+    Route::get('/two-factor-challenge', [\App\Http\Controllers\Auth\TwoFactorAuthController::class, 'showChallenge'])->name('two-factor.challenge');
+    Route::post('/two-factor-challenge', [\App\Http\Controllers\Auth\TwoFactorAuthController::class, 'challenge'])->name('two-factor.challenge.submit');
+    
+    // Admin two-factor setup routes
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/admin/two-factor-auth', [\App\Http\Controllers\Auth\AdminTwoFactorAuthController::class, 'show'])->name('admin.two-factor.show');
+        Route::post('/admin/two-factor-auth/enable', [\App\Http\Controllers\Auth\AdminTwoFactorAuthController::class, 'enable'])->name('admin.two-factor.enable');
+        Route::post('/admin/two-factor-auth/disable', [\App\Http\Controllers\Auth\AdminTwoFactorAuthController::class, 'disable'])->name('admin.two-factor.disable');
+        Route::post('/admin/two-factor-auth/confirm', [\App\Http\Controllers\Auth\AdminTwoFactorAuthController::class, 'confirm'])->name('admin.two-factor.confirm');
+        Route::get('/admin/two-factor-auth/qr-code', [\App\Http\Controllers\Auth\AdminTwoFactorAuthController::class, 'qrCode'])->name('admin.two-factor.qr-code');
+        Route::get('/admin/two-factor-auth/recovery-codes', [\App\Http\Controllers\Auth\AdminTwoFactorAuthController::class, 'recoveryCodes'])->name('admin.two-factor.recovery-codes');
+        Route::post('/admin/two-factor-auth/recovery-codes', [\App\Http\Controllers\Auth\AdminTwoFactorAuthController::class, 'regenerateRecoveryCodes'])->name('admin.two-factor.regenerate-recovery-codes');
+    });
+});
+
 // Store Owner Authentication Routes
 Route::middleware('guest:store-owner')->group(function () {
     Route::get('/store-owner/login', [StoreOwnerAuthController::class, 'showLoginForm'])->name('store-owner.login');
@@ -70,9 +88,13 @@ Route::middleware('guest:store-staff')->group(function () {
 // - /user/two-factor-recovery-codes (POST)
 
 // Common routes
+
+// Access denied route
 Route::get('/access-denied', function () {
-    return view('access-denied');
+    return view('errors.access-denied');
 })->name('access.denied');
+
+// User Two-Factor Authentication Routes
 
 // Redirect root to appropriate dashboard based on authentication
 Route::get('/', function () {
@@ -83,7 +105,7 @@ Route::get('/', function () {
     } elseif (auth()->guard('store-staff')->check()) {
         return redirect()->route('store-staff.dashboard');
     } else {
-        return redirect()->route('login');
+        return redirect()->route('admin.login');
     }
 });
 
@@ -105,8 +127,6 @@ Route::middleware(['auth:store-owner'])->group(function () {
     })->name('store-owner.dashboard');
     
     Route::post('/store-owner/logout', [StoreOwnerAuthController::class, 'logout'])->name('store-owner.logout');
-    
-    // Add your store owner protected routes here
 });
 
 // Store Staff protected routes

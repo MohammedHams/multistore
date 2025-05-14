@@ -17,6 +17,7 @@ class CreateStoreStaffTable extends Migration
             $table->id();
             $table->foreignId('store_id')->constrained('stores')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('role')->nullable();
             $table->json('permissions')->nullable();
             $table->timestamps();
 

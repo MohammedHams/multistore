@@ -70,6 +70,13 @@ class StoreOwnerSeeder extends Seeder
                 StoreStaff::firstOrCreate([
                     'user_id' => $staff->id,
                     'store_id' => $storeId,
+                ], [
+                    'role' => 'staff', // Default role
+                    'permissions' => json_encode([
+                        'view-store',
+                        'view-products',
+                        'view-orders'
+                    ])
                 ]);
             }
 

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Store\Http\Controllers\StoreController;
 use Modules\Store\Http\Controllers\StoreOwnerController;
 use Modules\Store\Http\Controllers\StoreStaffController;
+use Modules\Store\Http\Controllers\StoreOwnerStaffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,25 +71,25 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
 // Store Owner routes - access only to their own store
 Route::middleware(['auth:store-owner'])->prefix('store-owner')->group(function () {
     // Store Management (limited to view only)
-    Route::middleware(['permission:view-store'])->group(function () {
+    Route::middleware(['\App\Http\Middleware\CheckPermission:view-store'])->group(function () {
         Route::get('stores', [\Modules\Store\Http\Controllers\StoreController::class, 'index'])->name('store-owner.store.index');
         Route::get('stores/{store}', [\Modules\Store\Http\Controllers\StoreController::class, 'show'])->name('store-owner.store.show');
     });
     
     // Store Management (edit)
-    Route::middleware(['permission:edit-store'])->group(function () {
+    Route::middleware(['\App\Http\Middleware\CheckPermission:edit-store'])->group(function () {
         Route::get('stores/{store}/edit', [\Modules\Store\Http\Controllers\StoreController::class, 'edit'])->name('store-owner.store.edit');
         Route::put('stores/{store}', [\Modules\Store\Http\Controllers\StoreController::class, 'update'])->name('store-owner.store.update');
     });
 
     // Store Staff Management
     Route::middleware(['permission:manage-staff'])->group(function () {
-        Route::get('stores/{store}/staff', [\Modules\Store\Http\Controllers\StoreStaffController::class, 'index'])->name('store-owner.store.staff.index');
-        Route::get('stores/{store}/staff/create', [\Modules\Store\Http\Controllers\StoreStaffController::class, 'create'])->name('store-owner.store.staff.create');
-        Route::post('stores/{store}/staff', [\Modules\Store\Http\Controllers\StoreStaffController::class, 'store'])->name('store-owner.store.staff.store');
-        Route::get('stores/{store}/staff/{user}/edit', [\Modules\Store\Http\Controllers\StoreStaffController::class, 'edit'])->name('store-owner.store.staff.edit');
-        Route::put('stores/{store}/staff/{user}', [\Modules\Store\Http\Controllers\StoreStaffController::class, 'update'])->name('store-owner.store.staff.update');
-        Route::delete('stores/{store}/staff/{user}', [\Modules\Store\Http\Controllers\StoreStaffController::class, 'destroy'])->name('store-owner.store.staff.destroy');
+        Route::get('stores/{store}/staff', [\Modules\Store\Http\Controllers\StoreOwnerStaffController::class, 'index'])->name('store-owner.store.staff.index');
+        Route::get('stores/{store}/staff/create', [\Modules\Store\Http\Controllers\StoreOwnerStaffController::class, 'create'])->name('store-owner.store.staff.create');
+        Route::post('stores/{store}/staff', [\Modules\Store\Http\Controllers\StoreOwnerStaffController::class, 'store'])->name('store-owner.store.staff.store');
+        Route::get('stores/{store}/staff/{user}/edit', [\Modules\Store\Http\Controllers\StoreOwnerStaffController::class, 'edit'])->name('store-owner.store.staff.edit');
+        Route::put('stores/{store}/staff/{user}', [\Modules\Store\Http\Controllers\StoreOwnerStaffController::class, 'update'])->name('store-owner.store.staff.update');
+        Route::delete('stores/{store}/staff/{user}', [\Modules\Store\Http\Controllers\StoreOwnerStaffController::class, 'destroy'])->name('store-owner.store.staff.destroy');
     });
 });
 

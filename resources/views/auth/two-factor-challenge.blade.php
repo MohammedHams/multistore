@@ -6,7 +6,7 @@
 
 @section('content')
 <!--begin::Form-->
-<form class="form w-100" action="{{ route('two-factor.login') }}" method="POST" novalidate="novalidate" id="kt_two_factor_form">
+<form class="form w-100" action="{{ route('two-factor.challenge.submit') }}" method="POST" id="kt_two_factor_form">
     @csrf
     
     <!--begin::Heading-->
@@ -17,6 +17,28 @@
         <!--begin::Link-->
         <div class="text-gray-400 fw-bold fs-4">أدخل رمز المصادقة من تطبيق المصادقة الخاص بك أو استخدم رمز الاسترداد.</div>
         <!--end::Link-->
+        
+        @if(session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+        @endif
+        
+        @if(session('warning'))
+        <div class="alert alert-warning">
+            {{ session('warning') }}
+        </div>
+        @endif
+        
+        @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
     </div>
     <!--begin::Heading-->
 
@@ -48,63 +70,22 @@
     @endif
 
     <div class="mb-10">
-        <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-            <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_code">رمز المصادقة</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_email">رمز البريد الإلكتروني</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_sms">رمز الرسائل القصيرة</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_recovery">رمز الاسترداد</a>
-            </li>
-        </ul>
-        
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="kt_tab_pane_code" role="tabpanel">
-                <!--begin::Input group-->
-                <div class="fv-row mb-10">
-                    <label class="form-label fw-bolder text-gray-900 fs-6">رمز المصادقة</label>
-                    <input class="form-control form-control-lg form-control-solid" type="text" name="code" autocomplete="off" />
-                </div>
-                <!--end::Input group-->
-            </div>
-            <div class="tab-pane fade" id="kt_tab_pane_email" role="tabpanel">
-                <!--begin::Input group-->
-                <div class="fv-row mb-10">
-                    <label class="form-label fw-bolder text-gray-900 fs-6">رمز البريد الإلكتروني</label>
-                    <input class="form-control form-control-lg form-control-solid" type="text" name="code" autocomplete="off" />
-                    <input type="hidden" name="method" value="email" />
-                    <div class="form-text">
-                        <a href="{{ route('two-factor.resend') }}?method=email" class="link-primary">إرسال رمز جديد</a>
-                    </div>
-                </div>
-                <!--end::Input group-->
-            </div>
-            <div class="tab-pane fade" id="kt_tab_pane_sms" role="tabpanel">
-                <!--begin::Input group-->
-                <div class="fv-row mb-10">
-                    <label class="form-label fw-bolder text-gray-900 fs-6">رمز الرسائل القصيرة</label>
-                    <input class="form-control form-control-lg form-control-solid" type="text" name="code" autocomplete="off" />
-                    <input type="hidden" name="method" value="sms" />
-                    <div class="form-text">
-                        <a href="{{ route('two-factor.resend') }}?method=sms" class="link-primary">إرسال رمز جديد</a>
-                    </div>
-                </div>
-                <!--end::Input group-->
-            </div>
-            <div class="tab-pane fade" id="kt_tab_pane_recovery" role="tabpanel">
-                <!--begin::Input group-->
-                <div class="fv-row mb-10">
-                    <label class="form-label fw-bolder text-gray-900 fs-6">رمز الاسترداد</label>
-                    <input class="form-control form-control-lg form-control-solid" type="text" name="recovery_code" autocomplete="off" />
-                </div>
-                <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class="fv-row mb-10">
+            <label class="form-label fw-bolder text-gray-900 fs-6">رمز التحقق</label>
+            <input class="form-control form-control-lg form-control-solid" type="text" name="code" autocomplete="off" />
+            <div class="form-text">
+                <a href="{{ route('two-factor.resend') }}" class="link-primary">إرسال رمز جديد</a>
             </div>
         </div>
+        <!--end::Input group-->
+        
+        <!--begin::Input group-->
+        <div class="fv-row mb-10">
+            <label class="form-label fw-bolder text-gray-900 fs-6">أو أدخل رمز الاسترداد</label>
+            <input class="form-control form-control-lg form-control-solid" type="text" name="recovery_code" autocomplete="off" />
+        </div>
+        <!--end::Input group-->
     </div>
     
     <!--begin::Actions-->
@@ -122,139 +103,32 @@
 
 @push('scripts')
 <script>
-    // Form validation
-    var KTTwoFactorGeneral = function() {
-        // Elements
-        var form;
-        var submitButton;
-        var validator;
-
-        // Handle form
-        var handleForm = function(e) {
-            // Init form validation rules
-            validator = FormValidation.formValidation(
-                form,
-                {
-                    fields: {					
-                        'code': {
-                            validators: {
-                                callback: {
-                                    message: 'الرجاء إدخال رمز مصادقة صالح',
-                                    callback: function(input) {
-                                        const value = input.value;
-                                        if (!value) {
-                                            return false;
-                                        }
-                                        
-                                        // Check if the code tab is active
-                                        if (document.querySelector('#kt_tab_pane_code').classList.contains('active')) {
-                                            return value.length === 6 && /^[0-9]+$/.test(value);
-                                        }
-                                        
-                                        // Check if the email OTP tab is active
-                                        if (document.querySelector('#kt_tab_pane_email').classList.contains('active')) {
-                                            return value.length === 6 && /^[0-9]+$/.test(value);
-                                        }
-                                        
-                                        return true;
-                                    }
-                                }
-                            }
-                        },
-                        'recovery_code': {
-                            validators: {
-                                callback: {
-                                    message: 'الرجاء إدخال رمز استرداد صالح',
-                                    callback: function(input) {
-                                        const value = input.value;
-                                        
-                                        // Check if the recovery tab is active
-                                        if (document.querySelector('#kt_tab_pane_recovery').classList.contains('active')) {
-                                            return value.length > 0;
-                                        }
-                                        
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        trigger: new FormValidation.plugins.Trigger(),
-                        bootstrap: new FormValidation.plugins.Bootstrap5({
-                            rowSelector: '.fv-row',
-                            eleInvalidClass: '',
-                            eleValidClass: ''
-                        })
-                    }
-                }
-            );		
-
-            // Handle tab changes
-            const tabLinks = document.querySelectorAll('.nav-link');
-            tabLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    validator.resetForm();
-                });
+    // Simple form handling without validation
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.querySelector('#kt_two_factor_form');
+        var submitButton = document.querySelector('#kt_two_factor_submit');
+        
+        // Handle tab changes
+        const tabLinks = document.querySelectorAll('.nav-link');
+        tabLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Reset any error messages
+                document.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
+                document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
             });
-
-            // Handle form submit
-            submitButton.addEventListener('click', function (e) {
-                // Prevent button default action
-                e.preventDefault();
-
-                // Validate form
-                validator.validate().then(function (status) {
-                    if (status == 'Valid') {
-                        // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
-
-                        // Disable button to avoid multiple clicks
-                        submitButton.disabled = true;
-                        
-                        // Submit form
-                        form.submit();
-                    } else {
-                        // Add error class to the form controls instead of showing a popup
-                        const activeTab = document.querySelector('.tab-pane.active');
-                        const inputField = activeTab.querySelector('input');
-                        if (inputField) {
-                            inputField.classList.add('is-invalid');
-                            
-                            // Add error message below the input
-                            const errorDiv = document.createElement('div');
-                            errorDiv.className = 'invalid-feedback d-block';
-                            errorDiv.textContent = 'الرجاء إدخال رمز مصادقة أو رمز استرداد صالح.';
-                            
-                            // Remove any existing error message
-                            const existingError = inputField.parentNode.querySelector('.invalid-feedback');
-                            if (existingError) {
-                                existingError.remove();
-                            }
-                            
-                            // Add the new error message
-                            inputField.parentNode.appendChild(errorDiv);
-                        }
-                    }
-                });
-            });
-        }
-
-        // Public functions
-        return {
-            // Initialization
-            init: function() {
-                form = document.querySelector('#kt_two_factor_form');
-                submitButton = document.querySelector('#kt_two_factor_submit');
-                
-                handleForm();
-            }
-        };
-    }();
-
-    // On document ready
-    KTUtil.onDOMContentLoaded(function() {
-        KTTwoFactorGeneral.init();
+        });
+        
+        // Handle submit button click
+        submitButton.addEventListener('click', function(e) {
+            // Show loading indication
+            submitButton.setAttribute('data-kt-indicator', 'on');
+            
+            // Disable button to avoid multiple clicks
+            submitButton.disabled = true;
+            
+            // Submit the form
+            form.submit();
+        });
     });
 </script>
 @endpush
