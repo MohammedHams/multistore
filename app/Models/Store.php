@@ -42,7 +42,7 @@ class Store extends Model
      */
     public function employees(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'store_employees')
+        return $this->belongsToMany(User::class, 'store_staff')
                     ->withPivot('role')
                     ->withTimestamps();
     }

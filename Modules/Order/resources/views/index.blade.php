@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">الطلبات</h5>
-                    <a href="{{ route('order.create') }}" class="btn btn-primary btn-sm">إنشاء طلب</a>
+                    <a href="{{ route('admin.order.create') }}" class="btn btn-primary btn-sm">إنشاء طلب</a>
                 </div>
 
                 <div class="card-body">
@@ -24,7 +24,7 @@
                     @endif
 
                     <div class="mb-3">
-                        <form action="{{ route('order.index') }}" method="GET" class="row g-3">
+                        <form action="{{ route('admin.order.index') }}" method="GET" class="row g-3">
                             <div class="col-md-2">
                                 <select name="status" class="form-select">
                                     <option value="">جميع الحالات</option>
@@ -105,9 +105,9 @@
                                         <td>{{ $order->created_at->format('Y-m-d') }}</td>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <a href="{{ route('order.show', $order->id) }}" class="btn btn-info btn-sm">عرض</a>
-                                                <a href="{{ route('order.edit', $order->id) }}" class="btn btn-primary btn-sm">تعديل</a>
-                                                <form action="{{ route('order.destroy', $order->id) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد أنك تريد حذف هذا الطلب؟');">
+                                                <a href="{{ route('admin.order.show', $order->id) }}" class="btn btn-info btn-sm">عرض</a>
+                                                <a href="{{ route('admin.order.edit', $order->id) }}" class="btn btn-primary btn-sm">تعديل</a>
+                                                <form action="{{ route('admin.order.destroy', $order->id) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد أنك تريد حذف هذا الطلب؟');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm">حذف</button>

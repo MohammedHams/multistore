@@ -1,61 +1,214 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# MultiStore - متعدد المتاجر
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<div dir="rtl">
 
-## About Laravel
+## نظرة عامة
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+MultiStore هو نظام متكامل لإدارة متاجر متعددة، يتيح لكل متجر إدارة منتجاته وطلباته وموظفيه بشكل منفصل. يدعم النظام المصادقة الثنائية وإرسال إشعارات الطلبات عبر الواتساب.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### الميزات الرئيسية
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **إدارة المتاجر والمستخدمين**
+   - إنشاء متاجر جديدة مع بيانات خاصة (اسم المتجر، النطاق الفرعي، رقم الهاتف)
+   - إدارة موظفي المتجر مع تحديد صلاحياتهم (إدارة الطلبات / المنتجات / إعدادات المتجر)
 
-## Learning Laravel
+2. **المصادقة الثنائية**
+   - إرسال رمز OTP عبر البريد الإلكتروني
+   - نظام حراسة (Guard) منفصل لكل نوع مستخدم (صاحب متجر، موظف، مدير النظام)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. **الطلبات والمنتجات**
+   - إدارة المنتجات والطلبات بشكل كامل
+   - ربط كل طلب بمتجر محدد ومنتجاته
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+4. **الربط مع خدمات خارجية**
+   - إرسال تفاصيل الطلبات إلى الواتساب عبر ملف PDF
+   - معالجة الإشعارات باستخدام نظام الطوابير (Queue)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+</div>
 
-## Laravel Sponsors
+## Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Requirements
 
-### Premium Partners
+- PHP 8.1 or higher
+- Composer
+- MySQL 5.7 or higher
+- Node.js and NPM
+- Laravel 10
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+### Setup Steps
 
-## Contributing
+1. Clone the repository
+   ```bash
+   git clone https://github.com/yourusername/multistore.git
+   cd multistore
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. Install PHP dependencies
+   ```bash
+   composer install
+   ```
 
-## Code of Conduct
+3. Install JavaScript dependencies
+   ```bash
+   npm install
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. Create a copy of the environment file
+   ```bash
+   cp .env.example .env
+   ```
 
-## Security Vulnerabilities
+5. Generate an application key
+   ```bash
+   php artisan key:generate
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6. Configure your database in the `.env` file
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=multistore
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+7. Configure WhatsApp API in the `.env` file
+   ```
+   WHATSAPP_ENABLED=true
+   WHATSAPP_API_URL=https://graph.facebook.com/v17.0/YOUR_PHONE_NUMBER_ID/messages
+   WHATSAPP_API_TOKEN=YOUR_API_TOKEN
+   WHATSAPP_DEFAULT_PHONE=+1234567890
+   ```
+
+8. Configure queue settings in the `.env` file
+   ```
+   QUEUE_CONNECTION=database
+   QUEUE_FAILED_DRIVER=database
+   ```
+
+9. Run database migrations and seed the database
+   ```bash
+   php artisan migrate --seed
+   ```
+
+10. Build frontend assets
+    ```bash
+    npm run dev
+    ```
+
+11. Start the development server
+    ```bash
+    php artisan serve
+    ```
+
+## Queue Worker Setup
+
+The application uses Laravel's queue system to process WhatsApp notifications in the background. To start the queue worker:
+
+```bash
+# Start a queue worker for the default queue
+php artisan queue:work
+
+# Start a dedicated worker for WhatsApp notifications
+php artisan queue:work --queue=whatsapp
+
+# Start a worker that listens to multiple queues with priorities
+php artisan queue:work --queue=whatsapp,default
+
+# Run the worker in the background (for production)
+php artisan queue:work --daemon --queue=whatsapp,default
+```
+
+### Monitoring Failed Jobs
+
+To view and manage failed jobs:
+
+```bash
+# List all failed jobs
+php artisan queue:failed
+
+# Retry a specific failed job
+php artisan queue:retry [id]
+
+# Retry all failed jobs
+php artisan queue:retry all
+
+# Delete a failed job
+php artisan queue:forget [id]
+
+# Delete all failed jobs
+php artisan queue:flush
+```
+
+## Test Credentials
+
+### Admin Login
+- URL: `/admin/login`
+- Email: `admin@example.com`
+- Password: `password`
+
+### Store Owner Login
+- URL: `/store-owner/login`
+- Email: `owner@example.com`
+- Password: `password`
+
+### Store Staff Login
+- URL: `/store-staff/login`
+- Email: `staff@example.com`
+- Password: `password`
+
+## Project Structure
+
+The application follows a modular structure using Laravel Modules:
+
+```
+Modules/
+├── Order/             # Order management module
+│   ├── Entities/      # Order domain models
+│   ├── Events/        # Order-related events
+│   ├── Http/          # Controllers and requests
+│   ├── Jobs/          # Queue jobs for order processing
+│   ├── Listeners/     # Event listeners
+│   ├── Repositories/  # Order repositories
+│   ├── Resources/     # Views and assets
+│   └── Services/      # Order-related services
+│
+├── Product/           # Product management module
+│   ├── Entities/
+│   ├── Http/
+│   ├── Repositories/
+│   └── Resources/
+│
+└── Store/             # Store management module
+    ├── Entities/
+    ├── Http/
+    ├── Repositories/
+    └── Resources/
+```
+
+## Architecture
+
+The application follows a clean architecture with:
+
+1. **Dual Model Structure**:
+   - Eloquent models in `App\Models` namespace for database operations
+   - Value object entities in `Modules\*\Entities` namespace as return types from repositories
+
+2. **Repository Pattern**:
+   - Interface-based repositories for each module
+   - Eloquent implementations of these repositories
+
+3. **Service Layer**:
+   - Business logic encapsulated in services
+   - External integrations handled through dedicated services
+
+4. **Event-Driven Architecture**:
+   - Events dispatched for important actions
+   - Listeners handle side effects (like sending notifications)
+   - Queue jobs for asynchronous processing
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License.

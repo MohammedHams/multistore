@@ -11,12 +11,36 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+        'store-owner' => [
+            'driver' => 'session',
+            'provider' => 'store-owners',
+        ],
+        'store-staff' => [
+            'driver' => 'session',
+            'provider' => 'store-staff',
+        ],
     ],
 
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+        'store-owners' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\StoreOwner::class,
+        ],
+        'store-staff' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\StoreStaff::class,
         ],
     ],
 

@@ -5,10 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 
-class StoreStaff extends Model
+class StoreStaff extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'store_staff';
     
     /**
      * The attributes that are mass assignable.
@@ -19,6 +29,16 @@ class StoreStaff extends Model
         'store_id',
         'user_id',
         'permissions',
+    ];
+    
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
     
     /**

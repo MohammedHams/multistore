@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">إنشاء طلب جديد</h5>
-                    <a href="{{ route('order.index') }}" class="btn btn-secondary btn-sm">العودة إلى القائمة</a>
+                    <a href="{{ route('admin.order.index') }}" class="btn btn-secondary btn-sm">العودة إلى القائمة</a>
                 </div>
 
                 <div class="card-body">
@@ -17,7 +17,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('order.store') }}" method="POST" id="orderForm">
+                    <form action="{{ route('admin.order.store') }}" method="POST" id="orderForm">
                         @csrf
                         
                         <div class="row mb-3">

@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\StoreOwner;
+use App\Models\StoreStaff;
 
 class User extends Authenticatable
 {
@@ -54,7 +55,7 @@ class User extends Authenticatable
      */
     public function stores(): BelongsToMany
     {
-        return $this->belongsToMany(Store::class, 'store_employees')
+        return $this->belongsToMany(Store::class, 'store_staff')
                     ->withPivot('role')
                     ->withTimestamps();
     }
@@ -100,5 +101,15 @@ class User extends Authenticatable
     public function storeOwners(): HasMany
     {
         return $this->hasMany(StoreOwner::class, 'user_id');
+    }
+    
+    /**
+     * Get the store staff records associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function storeStaff(): HasMany
+    {
+        return $this->hasMany(StoreStaff::class, 'user_id');
     }
 }

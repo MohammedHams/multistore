@@ -41,5 +41,12 @@ return [
         'default_phone' => env('WHATSAPP_DEFAULT_PHONE', '+1234567890'),
         'enabled' => env('WHATSAPP_ENABLED', false),
     ],
+    
+    'sms' => [
+        'api_url' => env('SMS_API_URL', 'https://api.sms-service.com/send'),
+        'api_key' => env('SMS_API_KEY', ''),
+        'sender_id' => env('SMS_SENDER_ID', 'MultiStore'),
+        'enabled' => env('SMS_ENABLED', false),
+    ],
 
 ];

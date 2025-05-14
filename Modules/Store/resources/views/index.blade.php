@@ -85,13 +85,13 @@ $pageTitle = 'المتاجر';
                             </td>
                             <td>{{ $store->created_at->format('Y-m-d') }}</td>
                             <td>
-                                <a href="{{ route('store.show', $store) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="عرض">
+                                <a href="{{ route('store.show', $store->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="عرض">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="{{ route('store.edit', $store) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="تعديل">
+                                <a href="{{ route('store.edit', $store->id) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="تعديل">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('store.destroy', $store) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد من حذف هذا المتجر؟');">
+                                <form action="{{ route('store.destroy', $store->id) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد من حذف هذا المتجر؟');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" data-bs-toggle="tooltip" title="حذف">

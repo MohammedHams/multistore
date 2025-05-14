@@ -107,7 +107,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion">
                         <div class="menu-item">
-                            <a class="menu-link" href="/products">
+                            <a class="menu-link" href="{{ route('admin.product.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -115,7 +115,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="/products/create">
+                            <a class="menu-link" href="{{ route('admin.product.create') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -147,7 +147,7 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion">
                         <div class="menu-item">
-                            <a class="menu-link" href="/orders">
+                            <a class="menu-link" href="{{ route('admin.order.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -155,7 +155,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="/orders/create">
+                            <a class="menu-link" href="{{ route('admin.order.create') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

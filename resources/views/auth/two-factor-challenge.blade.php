@@ -56,6 +56,9 @@
                 <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_email">رمز البريد الإلكتروني</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_sms">رمز الرسائل القصيرة</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_recovery">رمز الاسترداد</a>
             </li>
         </ul>
@@ -74,8 +77,21 @@
                 <div class="fv-row mb-10">
                     <label class="form-label fw-bolder text-gray-900 fs-6">رمز البريد الإلكتروني</label>
                     <input class="form-control form-control-lg form-control-solid" type="text" name="code" autocomplete="off" />
+                    <input type="hidden" name="method" value="email" />
                     <div class="form-text">
-                        <a href="{{ route('two-factor.send-code') }}" class="link-primary">إرسال رمز جديد إلى البريد الإلكتروني</a>
+                        <a href="{{ route('two-factor.resend') }}?method=email" class="link-primary">إرسال رمز جديد</a>
+                    </div>
+                </div>
+                <!--end::Input group-->
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_sms" role="tabpanel">
+                <!--begin::Input group-->
+                <div class="fv-row mb-10">
+                    <label class="form-label fw-bolder text-gray-900 fs-6">رمز الرسائل القصيرة</label>
+                    <input class="form-control form-control-lg form-control-solid" type="text" name="code" autocomplete="off" />
+                    <input type="hidden" name="method" value="sms" />
+                    <div class="form-text">
+                        <a href="{{ route('two-factor.resend') }}?method=sms" class="link-primary">إرسال رمز جديد</a>
                     </div>
                 </div>
                 <!--end::Input group-->
