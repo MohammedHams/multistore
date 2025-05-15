@@ -9,6 +9,8 @@ use App\Traits\CustomAuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\TwoFactorAuthenticationProvider;
 
@@ -191,6 +193,19 @@ class StoreOwnerAuthController extends Controller
             
             if ($storeOwner) {
                 $user = $storeOwner->user;
+                
+                // Store store_id in session
+                $request->session()->put('store_id', $storeOwner->store_id);
+                
+                // Regenerate session to ensure it's properly maintained
+                $request->session()->regenerate();
+                
+                // Log session information
+                Log::info('Store owner login successful', [
+                    'user_id' => $user->id,
+                    'store_id' => $storeOwner->store_id,
+                    'session_id' => $request->session()->getId()
+                ]);
                 
                 // Check if 2FA is enabled for this user
                 if ($user && !empty($user->two_factor_secret)) {

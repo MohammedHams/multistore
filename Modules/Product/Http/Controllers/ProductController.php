@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Modules\Product\Repositories\Interfaces\ProductRepositoryInterface;
 use Modules\Store\Repositories\Interfaces\StoreRepositoryInterface;
@@ -133,58 +134,87 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the request
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            // Add other validation rules as needed
-        ]);
+        try {
+            // Validate request
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'sku' => 'required|string|unique:products',
+                'price' => 'required|numeric|min:0',
+                'stock' => 'required|integer|min:0',
+                'description' => 'required|string',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
 
-        if ($validator->fails()) {
+            if ($validator->fails()) {
+                if ($request->ajax()) {
+                    return response()->json(['errors' => $validator->errors()], 422);
+                }
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            // Get store_id from session for store owners
+            $store_id = null;
+            if (auth('store-owner')->check()) {
+                $store_id = Session::get('store_id');
+                if (!$store_id) {
+                    Log::error('Store ID not found in session');
+                    if ($request->ajax()) {
+                        return response()->json(['error' => 'Store information not found'], 422);
+                    }
+                    return redirect()->back()->with('error', 'Store information not found');
+                }
+            } elseif (auth('store-staff')->check()) {
+                $store_id = auth('store-staff')->user()->store_id;
+            } elseif (auth('admin')->check() && $request->has('store_id')) {
+                $store_id = $request->store_id;
+            }
+
+            if (!$store_id) {
+                if ($request->ajax()) {
+                    return response()->json(['error' => 'Store ID is required'], 422);
+                }
+                return redirect()->back()->with('error', 'Store ID is required');
+            }
+
+            // Merge store_id with validated data
+            $data = array_merge($validator->validated(), ['store_id' => $store_id]);
+
+            // Handle file upload if present
+            if ($request->hasFile('image')) {
+                $data['image'] = $request->file('image')->store('products', 'public');
+            }
+
+            // Create the product
+            $product = $this->productRepository->createProduct($data);
+
+            // Determine the correct route name based on guard
+            $routeName = 'product.index';
+            if (auth('store-owner')->check()) {
+                $routeName = 'store-owner.product.index';
+            } elseif (auth('store-staff')->check()) {
+                $routeName = 'store-staff.product.index';
+            } elseif (auth('admin')->check()) {
+                $routeName = 'admin.product.index';
+            }
+
             if ($request->ajax()) {
                 return response()->json([
-                    'success' => false,
-                    'errors' => $validator->errors()
-                ], 422);
+                    'success' => true,
+                    'message' => 'Product created successfully',
+                    'data' => $product
+                ]);
+            }
+
+            return redirect()->route($routeName)->with('success', 'Product created successfully');
+        } catch (\Exception $e) {
+            Log::error('Error creating product: ' . $e->getMessage());
+            
+            if ($request->ajax()) {
+                return response()->json(['error' => 'Error creating product'], 500);
             }
             
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->with('error', 'Error creating product');
         }
-
-        // Create the product
-        $product = $this->productRepository->createProduct($request->all());
-
-        // Determine which guard is being used
-        $guard = null;
-        if (auth('admin')->check()) {
-            $guard = 'admin';
-        } elseif (auth('store-owner')->check()) {
-            $guard = 'store-owner';
-        } elseif (auth('store-staff')->check()) {
-            $guard = 'store-staff';
-        }
-
-        // Determine the correct route name based on the guard
-        $routeName = 'product.index';
-        if ($guard === 'store-owner') {
-            $routeName = 'store-owner.product.index';
-        } elseif ($guard === 'store-staff') {
-            $routeName = 'store-staff.product.index';
-        } elseif ($guard === 'admin') {
-            $routeName = 'admin.product.index';
-        }
-
-        if ($request->ajax()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Product created successfully',
-                'data' => $product
-            ]);
-        }
-
-        return redirect()->route($routeName)->with('success', 'Product created successfully');
     }
 
     /**

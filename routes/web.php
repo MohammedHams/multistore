@@ -90,7 +90,7 @@ Route::middleware(['web'])->get('/', function () {
 });
 
 // Admin protected routes
-Route::middleware(['web', 'auth:admin'])->group(function () {
+Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
@@ -101,12 +101,6 @@ Route::middleware(['web', 'auth:admin'])->group(function () {
 });
 
 // Store Owner Two-Factor Challenge Routes (accessible without being fully authenticated)
-Route::middleware(['web'])->group(function () {
-    
-    Route::get('/store-owner/two-factor-challenge', [StoreOwnerAuthController::class, 'showTwoFactorChallenge'])->name('store-owner.two-factor.challenge');
-    Route::post('/store-owner/two-factor-challenge', [StoreOwnerAuthController::class, 'twoFactorChallenge'])->name('store-owner.two-factor.challenge.submit');
-    Route::post('/store-owner/two-factor-challenge/resend', [StoreOwnerAuthController::class, 'resendTwoFactorCode'])->name('store-owner.two-factor.resend');
-});
 
 // Protected Store Owner Routes
 Route::middleware(['auth:store-owner'])->group(function () {
@@ -115,6 +109,7 @@ Route::middleware(['auth:store-owner'])->group(function () {
     })->name('store-owner.dashboard');
 
     Route::post('/store-owner/logout', [StoreOwnerAuthController::class, 'logout'])->name('store-owner.logout');
+    Route::get('/store-owner/logout', [StoreOwnerAuthController::class, 'logout'])->name('store-owner.logout.get');
 });
 
 // Store Staff protected routes
@@ -127,3 +122,4 @@ Route::middleware(['auth:store-staff'])->group(function () {
 
     // Add your store staff protected routes here
 });
+

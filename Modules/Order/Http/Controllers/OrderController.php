@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Modules\Order\Repositories\Interfaces\OrderRepositoryInterface;
 use Modules\Order\Repositories\Interfaces\OrderItemRepositoryInterface;
@@ -169,6 +170,48 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        // Determine which guard is being used
+        $guard = null;
+        $store_id = null;
+        
+        if (auth('admin')->check()) {
+            $guard = 'admin';
+            // Admin needs to provide store_id in request
+            if (!$request->has('store_id')) {
+                if ($request->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'errors' => ['store_id' => ['Store ID is required']]
+                    ], 422);
+                }
+                return redirect()->back()->with('error', 'Store ID is required')->withInput();
+            }
+            $store_id = $request->store_id;
+        } elseif (auth('store-owner')->check()) {
+            $guard = 'store-owner';
+            // Get store_id from session for store owners
+            $store_id = Session::get('store_id');
+            if (!$store_id) {
+                Log::error('Store ID not found in session for store owner');
+                if ($request->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'errors' => ['store_id' => ['Store information not found']]
+                    ], 422);
+                }
+                return redirect()->back()->with('error', 'Store information not found')->withInput();
+            }
+        } elseif (auth('store-staff')->check()) {
+            $guard = 'store-staff';
+            // Get store_id from user model for store staff
+            $store_id = auth('store-staff')->user()->store_id;
+        }
+        
+        // Set store_id in request if we have it from session or user model
+        if ($store_id) {
+            $request->merge(['store_id' => $store_id]);
+        }
+        
         // Validate the request
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|exists:users,id',
