@@ -33,14 +33,11 @@ Route::middleware('guest:admin')->group(function () {
 });
 
 // Two-Factor Authentication Routes for all user types
-Route::middleware(['web'])->group(function () {
+Route::group(['middleware' => ['web']], function () {
     // Common two-factor challenge routes
     Route::get('/two-factor-challenge', [\App\Http\Controllers\Auth\TwoFactorAuthController::class, 'showChallenge'])->name('two-factor.challenge');
     Route::post('/two-factor-challenge', [\App\Http\Controllers\Auth\TwoFactorAuthController::class, 'challenge'])->name('two-factor.challenge.submit');
     Route::post('/two-factor-challenge/resend', [\App\Http\Controllers\Auth\TwoFactorAuthController::class, 'sendCode'])->name('two-factor.resend');
-
-    // Admin two-factor setup routes
-
 });
 
 // Store Owner Authentication Routes
@@ -80,7 +77,7 @@ Route::get('/access-denied', function () {
 // User Two-Factor Authentication Routes
 
 // Redirect root to appropriate dashboard based on authentication
-Route::get('/', function () {
+Route::middleware(['web'])->get('/', function () {
     if (auth()->guard('admin')->check()) {
         return redirect()->route('admin.dashboard');
     } elseif (auth()->guard('store-owner')->check()) {
@@ -93,7 +90,7 @@ Route::get('/', function () {
 });
 
 // Admin protected routes
-Route::middleware(['auth:admin'])->group(function () {
+Route::middleware(['web', 'auth:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
@@ -105,6 +102,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
 // Store Owner Two-Factor Challenge Routes (accessible without being fully authenticated)
 Route::middleware(['web'])->group(function () {
+    
     Route::get('/store-owner/two-factor-challenge', [StoreOwnerAuthController::class, 'showTwoFactorChallenge'])->name('store-owner.two-factor.challenge');
     Route::post('/store-owner/two-factor-challenge', [StoreOwnerAuthController::class, 'twoFactorChallenge'])->name('store-owner.two-factor.challenge.submit');
     Route::post('/store-owner/two-factor-challenge/resend', [StoreOwnerAuthController::class, 'resendTwoFactorCode'])->name('store-owner.two-factor.resend');

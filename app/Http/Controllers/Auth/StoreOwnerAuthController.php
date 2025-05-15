@@ -118,7 +118,7 @@ class StoreOwnerAuthController extends Controller
             
             // Store the user ID and remember flag in the session
             $request->session()->put([
-                'login.id' => $storeOwner->id,
+                'login.id' => $storeOwner->user_id,
                 'login.remember' => $request->filled('remember'),
                 'auth.guard' => 'store-owner',
             ]);

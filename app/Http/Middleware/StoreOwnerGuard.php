@@ -17,6 +17,10 @@ class StoreOwnerGuard
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::guard('store-owner')->check()) {
+            // Store the intended URL for redirection after login
+            if ($request->url() != route('store-owner.login')) {
+                session()->put('url.intended', $request->url());
+            }
             return redirect()->route('store-owner.login');
         }
 

@@ -16,7 +16,7 @@ $pageTitle = 'إنشاء متجر';
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('store.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.store.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-4">

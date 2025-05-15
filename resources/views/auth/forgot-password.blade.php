@@ -79,7 +79,7 @@
             <span class="indicator-progress">يرجى الانتظار...
             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
         </button>
-        <a href="{{ route('login') }}" class="btn btn-lg btn-light-primary fw-bolder">إلغاء</a>
+        <a href="{{ route('/') }}" class="btn btn-lg btn-light-primary fw-bolder">إلغاء</a>
     </div>
     <!--end::Actions-->
 </form>

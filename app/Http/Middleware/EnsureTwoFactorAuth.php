@@ -19,7 +19,7 @@ class EnsureTwoFactorAuth
     {
         // Check if the user is authenticated
         if (!auth()->check()) {
-            return redirect()->route('login');
+            return redirect()->route('/');
         }
 
         // Check if the user has two-factor authentication enabled

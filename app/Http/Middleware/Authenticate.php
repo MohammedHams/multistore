@@ -21,7 +21,7 @@ class Authenticate extends Middleware
             } elseif ($request->is('store-staff/*')) {
                 return route('store-staff.login');
             } else {
-                return route('login');
+                return route('/');
             }
         }
         
